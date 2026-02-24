@@ -1,0 +1,1501 @@
+﻿<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ACE Car Repair | Precisiewerk, Betrouwbare Service</title>
+  <meta name="description" content="ACE Car Repair biedt deskundig auto-onderhoud en herstellingen met gecertificeerde mecaniciens, transparante prijzen en betrouwbare service." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --charcoal: #15171a;
+      --charcoal-soft: #1f2328;
+      --silver: #c7ccd3;
+      --silver-bright: #eef2f6;
+      --accent: #e11919;
+      --accent-dark: #b81212;
+      --text: #f4f7fb;
+      --text-muted: #adb5bf;
+      --panel: rgba(24, 27, 31, 0.82);
+      --border: rgba(199, 204, 211, 0.2);
+      --shadow: 0 16px 34px rgba(0, 0, 0, 0.35);
+      --radius: 14px;
+      --nav-h: 78px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Montserrat", sans-serif;
+      background: linear-gradient(180deg, #0f1114 0%, #15171a 40%, #101215 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      z-index: 80;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .scroll-progress-bar {
+      display: block;
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #ff3b3b 0%, #e11919 100%);
+      box-shadow: 0 0 12px rgba(225, 25, 25, 0.55);
+      transition: width 0.08s linear;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1140px, 92%);
+      margin-inline: auto;
+    }
+
+    .section {
+      padding: 88px 0;
+    }
+
+    .section-title {
+      font-size: clamp(1.7rem, 2.6vw, 2.45rem);
+      margin: 0 0 14px;
+      letter-spacing: 0.4px;
+    }
+
+    .section-intro {
+      margin: 0 0 42px;
+      color: var(--text-muted);
+      max-width: 700px;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      height: var(--nav-h);
+      background: rgba(13, 15, 18, 0.84);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+    }
+
+    .brand-logo-shell {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      border-radius: 0;
+      background: transparent;
+      border: 0;
+      overflow: visible;
+    }
+
+    .brand-logo-shell::after {
+      content: none;
+    }
+
+    .brand-logo {
+      width: 128px;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 10px 18px rgba(225, 25, 25, 0.24)) brightness(1.07) saturate(1.07);
+      opacity: 1;
+      will-change: transform;
+      transition: transform 0.35s ease;
+      animation: none;
+    }
+
+    .brand:hover .brand-logo {
+      transform: scale(1.02);
+    }
+
+    .brand-name {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--silver-bright);
+      font-size: 0.92rem;
+      line-height: 1;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-name-main {
+      font-weight: 800;
+      color: #eef2f6;
+    }
+
+    .brand-name-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 9px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #c91212 0%, #f02e2e 100%);
+      color: #ffffff;
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 0.76rem;
+      box-shadow: 0 6px 14px rgba(225, 25, 25, 0.34);
+    }
+
+    .brand-logo-shell.logo-fallback + .brand-name {
+      color: var(--accent);
+      font-size: 1rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      font-weight: 600;
+      font-size: 0.94rem;
+    }
+
+    .nav-links a {
+      color: var(--silver-bright);
+      opacity: 0.9;
+      transition: opacity 0.25s ease, color 0.25s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+      opacity: 1;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .nav-toggle {
+      display: none;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--silver-bright);
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .nav-toggle .bar {
+      width: 18px;
+      height: 2px;
+      border-radius: 2px;
+      background: currentColor;
+      position: relative;
+      transition: background 0.2s ease;
+    }
+
+    .nav-toggle .bar::before,
+    .nav-toggle .bar::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      width: 18px;
+      height: 2px;
+      border-radius: 2px;
+      background: currentColor;
+      transition: transform 0.25s ease, top 0.25s ease, bottom 0.25s ease;
+    }
+
+    .nav-toggle .bar::before { top: -6px; }
+    .nav-toggle .bar::after { bottom: -6px; }
+
+    .site-header.menu-open .nav-toggle .bar {
+      background: transparent;
+    }
+
+    .site-header.menu-open .nav-toggle .bar::before {
+      top: 0;
+      transform: rotate(45deg);
+    }
+
+    .site-header.menu-open .nav-toggle .bar::after {
+      bottom: 0;
+      transform: rotate(-45deg);
+    }
+
+    .lang-switch {
+      display: inline-flex;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 3px;
+      gap: 3px;
+    }
+
+    .lang-btn {
+      border: 0;
+      background: transparent;
+      color: var(--silver);
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.76rem;
+      letter-spacing: 0.5px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .lang-btn.active {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .hero {
+      min-height: calc(100vh - var(--nav-h));
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(110deg, rgba(11, 13, 15, 0.88) 0%, rgba(11, 13, 15, 0.63) 42%, rgba(11, 13, 15, 0.88) 100%),
+        url("https://images.unsplash.com/photo-1542282088-fe8426682b8f?auto=format&fit=crop&w=2000&q=80") center/cover no-repeat;
+      z-index: -2;
+      transform: scale(1.02);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 80% 20%, rgba(225, 25, 25, 0.18), transparent 42%);
+      z-index: -1;
+    }
+
+    .hero-content {
+      text-align: left;
+      max-width: 760px;
+      margin-right: auto;
+      padding: 48px 0;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 12px;
+      color: var(--silver);
+      border: 1px solid rgba(199, 204, 211, 0.3);
+      background: rgba(20, 23, 27, 0.6);
+      padding: 5px 11px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      font-weight: 600;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 4rem);
+      line-height: 1.12;
+    }
+
+    .hero p {
+      margin: 18px 0 30px;
+      color: var(--silver);
+      font-size: clamp(1rem, 1.8vw, 1.18rem);
+      max-width: 62ch;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 13px 24px;
+      border-radius: 10px;
+      font-weight: 700;
+      letter-spacing: 0.25px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+      border: 1px solid transparent;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent) 0%, #ff3e3e 100%);
+      color: #fff;
+      box-shadow: 0 12px 28px rgba(225, 25, 25, 0.42);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 34px rgba(225, 25, 25, 0.46);
+      background: linear-gradient(135deg, #f02020 0%, #ff5252 100%);
+    }
+
+    #services {
+      background: linear-gradient(180deg, #161a1f 0%, #13161a 100%);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .service-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 26px 22px;
+      box-shadow: var(--shadow);
+      transition: transform 0.32s ease, border-color 0.32s ease, box-shadow 0.32s ease;
+      transform-origin: center;
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px) scale(1.02);
+      border-color: rgba(225, 25, 25, 0.45);
+      box-shadow: 0 22px 42px rgba(0, 0, 0, 0.4);
+    }
+
+    .service-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: linear-gradient(145deg, rgba(199, 204, 211, 0.2), rgba(28, 31, 35, 0.8));
+      border: 1px solid rgba(199, 204, 211, 0.25);
+      display: grid;
+      place-items: center;
+      margin-bottom: 16px;
+    }
+
+    .service-card h3 {
+      margin: 0 0 9px;
+      font-size: 1.07rem;
+    }
+
+    .service-card p {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 0.94rem;
+    }
+
+    #about {
+      position: relative;
+    }
+
+    .about-wrap {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .about-panel,
+    .about-highlights {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 30px;
+      box-shadow: var(--shadow);
+    }
+
+    .about-panel p {
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .stats {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .stat {
+      padding: 14px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.12rem;
+      margin-bottom: 4px;
+      color: var(--silver-bright);
+    }
+
+    .stat span {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+    }
+
+    .about-highlights h3 {
+      margin-top: 0;
+    }
+
+    .about-highlights ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--silver);
+      display: grid;
+      gap: 9px;
+    }
+
+    #gallery {
+      background: linear-gradient(180deg, #13161a 0%, #171b20 100%);
+    }
+
+    .gallery-grid {
+      column-count: 3;
+      column-gap: 16px;
+    }
+
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 16px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      position: relative;
+      box-shadow: var(--shadow);
+      transform: translateZ(0);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      transition: transform 0.45s ease;
+    }
+
+    .gallery-item::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 55%, rgba(10, 12, 14, 0.55) 100%);
+      pointer-events: none;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.07);
+    }
+
+    .follow {
+      text-align: center;
+      padding: 64px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(135deg, rgba(199, 204, 211, 0.05), rgba(225, 25, 25, 0.06));
+    }
+
+    .follow h3 {
+      margin: 0 0 12px;
+      font-size: clamp(1.3rem, 2.3vw, 1.85rem);
+    }
+
+    .follow p {
+      margin: 0 0 20px;
+      color: var(--text-muted);
+    }
+
+    .follow-link {
+      color: var(--accent);
+      font-weight: 700;
+      border-bottom: 1px solid rgba(225, 25, 25, 0.4);
+      padding-bottom: 2px;
+    }
+
+    #appointment {
+      background: linear-gradient(180deg, #171b20 0%, #12151a 100%);
+    }
+
+    .appointment-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .appointment-info,
+    .appointment-form {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .appointment-info p {
+      margin: 0;
+      color: var(--text-muted);
+    }
+
+    .quick-contact {
+      margin-top: 14px;
+      color: var(--silver);
+      font-weight: 600;
+    }
+
+    .appointment-form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .field-full {
+      grid-column: 1 / -1;
+    }
+
+    .field label {
+      font-size: 0.86rem;
+      color: var(--silver);
+      font-weight: 600;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--text);
+      padding: 11px 12px;
+      font: inherit;
+    }
+
+    .field textarea {
+      min-height: 118px;
+      resize: vertical;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: rgba(225, 25, 25, 0.6);
+      box-shadow: 0 0 0 3px rgba(225, 25, 25, 0.15);
+    }
+
+    .appointment-note {
+      margin-top: 12px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .footer {
+      padding: 72px 0 26px;
+      background: #101317;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 22px;
+    }
+
+    .contact-card,
+    .map-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+
+    .contact-card h3,
+    .map-card h3 {
+      margin-top: 0;
+      margin-bottom: 14px;
+    }
+
+    .contact-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+      color: var(--silver);
+      font-size: 0.95rem;
+    }
+
+    .map-wrap {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      min-height: 250px;
+    }
+
+    .map-wrap iframe {
+      width: 100%;
+      height: 100%;
+      min-height: 250px;
+      border: 0;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+      color: #8f98a3;
+      font-size: 0.86rem;
+      text-align: center;
+    }
+
+    .quick-actions {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 70;
+      display: grid;
+      gap: 10px;
+    }
+
+    .quick-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 112px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(17, 19, 23, 0.88);
+      backdrop-filter: blur(8px);
+      color: #f3f6fb;
+      font-weight: 700;
+      font-size: 0.82rem;
+      letter-spacing: 0.25px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.28);
+      transition: transform 0.24s ease, border-color 0.24s ease, background 0.24s ease;
+    }
+
+    .quick-action:hover {
+      transform: translateY(-2px);
+      border-color: rgba(225, 25, 25, 0.45);
+      background: rgba(29, 33, 39, 0.94);
+    }
+
+    .quick-action.call {
+      color: #d9fbe6;
+      border-color: rgba(63, 185, 128, 0.45);
+    }
+
+    .quick-action.whatsapp {
+      color: #c8ffdc;
+      border-color: rgba(37, 211, 102, 0.5);
+    }
+
+    .quick-action.book {
+      color: #ffe0e0;
+      border-color: rgba(225, 25, 25, 0.5);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-2px); }
+    }
+
+    @keyframes logoGleam {
+      0%, 100% {
+        filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.35)) brightness(1) saturate(1);
+        opacity: 1;
+      }
+      50% {
+        filter: drop-shadow(0 10px 18px rgba(225, 25, 25, 0.24)) brightness(1.06) saturate(1.06);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 1020px) {
+      .services-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .about-wrap,
+      .footer-grid,
+      .appointment-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery-grid {
+        column-count: 2;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .site-header {
+        height: auto;
+        padding: 14px 0;
+      }
+
+      .nav-inner {
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+
+      .nav-toggle {
+        display: inline-flex;
+      }
+
+      .brand-logo {
+        width: 106px;
+      }
+
+      .brand-name {
+        font-size: 0.84rem;
+      }
+
+      .brand-name-badge {
+        font-size: 0.7rem;
+        padding: 4px 7px;
+      }
+
+      .header-actions {
+        width: 100%;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        margin-top: 12px;
+        padding: 12px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: rgba(13, 16, 20, 0.92);
+      }
+
+      .site-header.menu-open .header-actions {
+        display: flex;
+      }
+
+      .nav-links {
+        width: 100%;
+        display: grid;
+        gap: 8px;
+      }
+
+      .nav-links a {
+        display: block;
+        width: 100%;
+        padding: 9px 10px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .lang-switch {
+        align-self: flex-start;
+      }
+
+      .hero {
+        min-height: 88vh;
+      }
+
+      .services-grid,
+      .stats,
+      .appointment-form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery-grid {
+        column-count: 1;
+      }
+
+      .section {
+        padding: 68px 0;
+      }
+
+      .quick-actions {
+        right: 12px;
+        bottom: 12px;
+      }
+
+      .quick-action {
+        min-width: 98px;
+        padding: 9px 12px;
+        font-size: 0.78rem;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .hero-content {
+        padding: 34px 0;
+      }
+
+      .hero p {
+        font-size: 0.98rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="scroll-progress" aria-hidden="true"><span class="scroll-progress-bar" id="scrollProgressBar"></span></div>
+  <header class="site-header">
+    <div class="container nav-inner">
+      <a href="#home" class="brand" aria-label="ACE Car Repair home">
+        <span class="brand-logo-shell">
+          <img class="brand-logo" src="ace-logo-transparent.png" alt="ACE Car Repair logo" />
+        </span>
+        <span class="brand-name">
+          <span class="brand-name-main">ACE</span>
+          <span class="brand-name-badge">Car Repair</span>
+        </span>
+      </a>
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mainNav">
+        <span class="bar"></span>
+      </button>
+      <div class="header-actions">
+        <nav class="nav-links" id="mainNav" aria-label="Main navigation">
+          <a href="#services" data-i18n="navServices">Diensten</a>
+          <a href="#about" data-i18n="navAbout">Over Ons</a>
+          <a href="#gallery" data-i18n="navGallery">Galerij</a>
+          <a href="#contact" data-i18n="navContact">Contact</a>
+        </nav>
+        <div class="lang-switch" role="group" aria-label="Language switch">
+          <button class="lang-btn active" data-lang="nl" type="button" aria-pressed="true">NL</button>
+          <button class="lang-btn" data-lang="en" type="button" aria-pressed="false">EN</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="hero" aria-label="Hero">
+      <div class="container hero-content reveal">
+        <span class="eyebrow" data-i18n="heroEyebrow">Gecertificeerde Autospecialisten</span>
+        <h1 data-i18n="heroTitle">Precisiewerk, Betrouwbare Service</h1>
+        <p data-i18n="heroSubtitle">Deskundig onderhoud en herstellingen voor alle merken en modellen.</p>
+        <a class="btn btn-primary" href="#appointment" data-i18n="heroCta">Maak een Afspraak</a>
+      </div>
+    </section>
+
+    <section id="services" class="section" aria-label="Services">
+      <div class="container">
+        <h2 class="section-title reveal" data-i18n="servicesTitle">Professionele Diensten</h2>
+        <p class="section-intro reveal" data-i18n="servicesIntro">Van geavanceerde diagnose tot nauwkeurig mechanisch werk: wij leveren dealerkwaliteit met duidelijke adviezen en een betrouwbare doorlooptijd.</p>
+        <div class="services-grid">
+          <article class="service-card reveal">
+            <div class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#e11919" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><path d="M8 11h6"></path><path d="M11 8v6"></path></svg>
+            </div>
+            <h3 data-i18n="service1Title">Motordiagnose</h3>
+            <p data-i18n="service1Desc">Computergestuurde analyse en grondige inspectie om storingen snel te vinden en prestaties te optimaliseren.</p>
+          </article>
+          <article class="service-card reveal">
+            <div class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#e11919" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="3"></circle><path d="M12 3v3"></path><path d="M12 18v3"></path><path d="M3 12h3"></path><path d="M18 12h3"></path></svg>
+            </div>
+            <h3 data-i18n="service2Title">Remmen &amp; Ophanging</h3>
+            <p data-i18n="service2Desc">Nauwkeurige service aan rem- en ophangingssystemen voor maximale controle, comfort en veiligheid.</p>
+          </article>
+          <article class="service-card reveal">
+            <div class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#e11919" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="14" rx="2"></rect><path d="M8 3v4"></path><path d="M16 3v4"></path><path d="M4 10h16"></path></svg>
+            </div>
+            <h3 data-i18n="service3Title">Periodiek Onderhoud</h3>
+            <p data-i18n="service3Desc">Olie- en filterservice, vloeistofcontroles en preventief onderhoud om de levensduur van je wagen te verlengen.</p>
+          </article>
+          <article class="service-card reveal">
+            <div class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#e11919" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 1 1.4 0l1.6 1.6a1 1 0 0 1 0 1.4l-7.3 7.3-3 1 1-3z"></path><path d="M5 19h14"></path><path d="M12 5l7 7"></path></svg>
+            </div>
+            <h3 data-i18n="service4Title">Gespecialiseerde Herstellingen</h3>
+            <p data-i18n="service4Desc">Complexe aandrijflijn-, elektrische en model-specifieke herstellingen met OEM-kwaliteit en professionele tools.</p>
+          </article>
+          <article class="service-card reveal">
+            <div class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#e11919" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"></circle><circle cx="12" cy="12" r="3"></circle><path d="M12 4v2"></path><path d="M20 12h-2"></path><path d="M12 20v-2"></path><path d="M4 12h2"></path></svg>
+            </div>
+            <h3 data-i18n="service5Title">Bandenservice</h3>
+            <p data-i18n="service5Desc">Bandencontrole, montage, balanceren en seizoenswissels voor optimale grip en veiligheid.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section" aria-label="About us">
+      <div class="container about-wrap">
+        <article class="about-panel reveal">
+          <h2 class="section-title" data-i18n="aboutTitle">Technische Expertise. Transparant Proces.</h2>
+          <p data-i18n="aboutDesc">ACE Car Repair combineert gecertificeerde mecaniciens, geavanceerde diagnoseapparatuur en nauwkeurig vakmanschap om je voertuig in topvorm te houden. Elke offerte is helder, elk advies wordt uitgelegd en elke herstelling gebeurt met volledige verantwoordelijkheid.</p>
+          <div class="stats">
+            <div class="stat">
+              <strong data-i18n="stat1Title">Gecertificeerd</strong>
+              <span data-i18n="stat1Desc">Ervaren vaktechniekers</span>
+            </div>
+            <div class="stat">
+              <strong data-i18n="stat2Title">Multi-Merk</strong>
+              <span data-i18n="stat2Desc">Ondersteuning voor elk type wagen</span>
+            </div>
+            <div class="stat">
+              <strong data-i18n="stat3Title">Transparant</strong>
+              <span data-i18n="stat3Desc">Duidelijke prijzen en goedkeuring vooraf</span>
+            </div>
+          </div>
+        </article>
+        <aside class="about-highlights reveal" aria-label="Why clients choose ACE">
+          <h3 data-i18n="highlightsTitle">Waarom Bestuurders voor ACE Kiezen</h3>
+          <ul>
+            <li data-i18n="highlight1">Tools op werkplaatsniveau en nauwkeurige kalibratie</li>
+            <li data-i18n="highlight2">Gedetailleerde digitale inspecties met prioriteiten</li>
+            <li data-i18n="highlight3">Heldere planning, eerlijke communicatie, geen verborgen kosten</li>
+            <li data-i18n="highlight4">Werkplek volgens hoge netheids- en kwaliteitsstandaarden</li>
+            <li data-i18n="highlight5">Avond- en weekendservice op afspraak</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section id="gallery" class="section" aria-label="Gallery">
+      <div class="container">
+        <h2 class="section-title reveal" data-i18n="galleryTitle">Werkplaats Galerij</h2>
+        <p class="section-intro reveal" data-i18n="galleryIntro">Een blik in onze nette, moderne werkplaats waar zowel luxe- als dagelijkse voertuigen met uiterste zorg worden behandeld.</p>
+        <div class="gallery-grid">
+          <figure class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1487754180451-c456f719a1fc?auto=format&fit=crop&w=900&q=80" alt="Technician servicing a premium vehicle" loading="lazy" /></figure>
+          <figure class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1615906655593-ad0386982a0f?auto=format&fit=crop&w=900&q=80" alt="Modern workshop with clean equipment" loading="lazy" /></figure>
+          <figure class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1625047509168-a7026f36de04?auto=format&fit=crop&w=900&q=80" alt="Routine maintenance on sedan" loading="lazy" /></figure>
+          <figure class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80" alt="Luxury car inspection in garage" loading="lazy" /></figure>
+          <figure class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=900&q=80" alt="Brake and suspension service" loading="lazy" /></figure>
+          <figure class="gallery-item reveal"><img src="https://images.unsplash.com/photo-1626668893632-6f3a4466d22f?auto=format&fit=crop&w=900&q=80" alt="Diagnostic equipment at work" loading="lazy" /></figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="appointment" class="section" aria-label="Appointment booking">
+      <div class="container appointment-wrap">
+        <article class="appointment-info reveal">
+          <h2 class="section-title" data-i18n="apptTitle">Maak een Afspraak</h2>
+          <p data-i18n="apptIntro">Vul het formulier in en wij bevestigen je afspraak zo snel mogelijk. Voor dringende gevallen kan je ons rechtstreeks bellen.</p>
+          <p class="quick-contact" data-i18n="apptQuickContact">Snelle contactlijn: <a href="tel:+32412345678">+32412345678</a></p>
+        </article>
+        <form class="appointment-form reveal" id="appointmentForm">
+          <div class="appointment-form-grid">
+            <div class="field">
+              <label for="apptName" data-i18n="labelName">Naam</label>
+              <input id="apptName" name="name" type="text" required />
+            </div>
+            <div class="field">
+              <label for="apptPhone" data-i18n="labelPhone">Telefoon</label>
+              <input id="apptPhone" name="phone" type="tel" required />
+            </div>
+            <div class="field">
+              <label for="apptEmail" data-i18n="labelEmail">E-mail</label>
+              <input id="apptEmail" name="email" type="email" required />
+            </div>
+            <div class="field">
+              <label for="apptVehicle" data-i18n="labelVehicle">Voertuig</label>
+              <input id="apptVehicle" name="vehicle" type="text" required data-i18n-placeholder="placeholderVehicle" placeholder="Bijv. BMW 3 Reeks - 2020" />
+            </div>
+            <div class="field">
+              <label for="apptService" data-i18n="labelService">Dienst</label>
+              <select id="apptService" name="service" required>
+                <option value="Motordiagnose" data-i18n="optionDiag">Motordiagnose</option>
+                <option value="Remmen & Ophanging" data-i18n="optionBrakes">Remmen &amp; Ophanging</option>
+                <option value="Periodiek Onderhoud" data-i18n="optionMaintenance">Periodiek Onderhoud</option>
+                <option value="Gespecialiseerde Herstelling" data-i18n="optionSpecial">Gespecialiseerde Herstelling</option>
+                <option value="Bandenservice" data-i18n="optionTires">Bandenservice</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="apptDate" data-i18n="labelDate">Gewenste datum</label>
+              <input id="apptDate" name="date" type="date" required />
+            </div>
+            <div class="field field-full">
+              <label for="apptDetails" data-i18n="labelDetails">Extra details</label>
+              <textarea id="apptDetails" name="details" data-i18n-placeholder="placeholderDetails" placeholder="Beschrijf kort de klacht of gewenste werken"></textarea>
+            </div>
+          </div>
+          <button class="btn btn-primary" type="submit" data-i18n="submitAppt">Afspraak Aanvragen</button>
+          <p class="appointment-note" id="appointmentNote" data-i18n="apptNote" aria-live="polite">Na verzenden opent je mail-app met een ingevulde aanvraag.</p>
+        </form>
+      </div>
+    </section>
+
+    <section class="follow reveal" aria-label="Social">
+      <div class="container">
+        <h3 data-i18n="followTitle">Volg Ons Werk</h3>
+        <p data-i18n="followDesc">Bekijk dagelijkse herstellingen, updates uit de werkplaats en projecthoogtepunten.</p>
+        <a class="follow-link" href="https://www.instagram.com/ace.carrepair/" target="_blank" rel="noopener noreferrer" data-i18n="followLink">@ace.carrepair op Instagram</a>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact" class="footer" aria-label="Contact and location">
+    <div class="container footer-grid">
+      <section class="contact-card reveal">
+        <h3 data-i18n="contactTitle">Contact &amp; Locatie</h3>
+        <ul class="contact-list">
+          <li data-i18n="contactAddress"><strong>Adres:</strong> Elzendreef 12, 2900 Schoten, België</li>
+          <li data-i18n="contactPhone"><strong>Telefoon:</strong> +32412345678</li>
+          <li data-i18n="contactHours"><strong>Openingsuren:</strong> Ma-Vr 8:00 - 18:00, Za 9:00 - 14:00</li>
+          <li data-i18n="contactEmail"><strong>E-mail:</strong> jonas.everaert@outlook.com</li>
+        </ul>
+      </section>
+      <section class="map-card reveal">
+        <h3 data-i18n="findUs">Vind Ons</h3>
+        <div class="map-wrap" role="region" aria-label="Google Maps location">
+          <iframe title="ACE Car Repair location map" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Elzendreef+12,+Schoten,+Belgium&output=embed"></iframe>
+        </div>
+      </section>
+    </div>
+    <div class="container footer-bottom">
+      <p data-i18n="copyright">© <span id="year"></span> ACE Car Repair. Alle rechten voorbehouden.</p>
+    </div>
+  </footer>
+
+  <div class="quick-actions" aria-label="Quick actions">
+    <a class="quick-action call" href="tel:+32412345678" data-i18n="quickCall">Bel Nu</a>
+    <a class="quick-action whatsapp" href="https://wa.me/32412345678" target="_blank" rel="noopener noreferrer" data-i18n="quickWhatsApp">WhatsApp</a>
+    <a class="quick-action book" href="#appointment" data-i18n="quickBook">Afspraak</a>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2, rootMargin: "0px 0px -40px 0px" });
+
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const translations = {
+      nl: {
+        navServices: "Diensten",
+        navAbout: "Over Ons",
+        navGallery: "Galerij",
+        navContact: "Contact",
+        heroEyebrow: "Gecertificeerde Autospecialisten",
+        heroTitle: "Precisiewerk, Betrouwbare Service",
+        heroSubtitle: "Deskundig onderhoud en herstellingen voor alle merken en modellen.",
+        heroCta: "Maak een Afspraak",
+        servicesTitle: "Professionele Diensten",
+        servicesIntro: "Van geavanceerde diagnose tot nauwkeurig mechanisch werk: wij leveren dealerkwaliteit met duidelijke adviezen en een betrouwbare doorlooptijd.",
+        service1Title: "Motordiagnose",
+        service1Desc: "Computergestuurde analyse en grondige inspectie om storingen snel te vinden en prestaties te optimaliseren.",
+        service2Title: "Remmen & Ophanging",
+        service2Desc: "Nauwkeurige service aan rem- en ophangingssystemen voor maximale controle, comfort en veiligheid.",
+        service3Title: "Periodiek Onderhoud",
+        service3Desc: "Olie- en filterservice, vloeistofcontroles en preventief onderhoud om de levensduur van je wagen te verlengen.",
+        service4Title: "Gespecialiseerde Herstellingen",
+        service4Desc: "Complexe aandrijflijn-, elektrische en model-specifieke herstellingen met OEM-kwaliteit en professionele tools.",
+        service5Title: "Bandenservice",
+        service5Desc: "Bandencontrole, montage, balanceren en seizoenswissels voor optimale grip en veiligheid.",
+        aboutTitle: "Technische Expertise. Transparant Proces.",
+        aboutDesc: "ACE Car Repair combineert gecertificeerde mecaniciens, geavanceerde diagnoseapparatuur en nauwkeurig vakmanschap om je voertuig in topvorm te houden. Elke offerte is helder, elk advies wordt uitgelegd en elke herstelling gebeurt met volledige verantwoordelijkheid.",
+        stat1Title: "Gecertificeerd",
+        stat1Desc: "Ervaren vaktechniekers",
+        stat2Title: "Multi-Merk",
+        stat2Desc: "Ondersteuning voor elk type wagen",
+        stat3Title: "Transparant",
+        stat3Desc: "Duidelijke prijzen en goedkeuring vooraf",
+        highlightsTitle: "Waarom Bestuurders voor ACE Kiezen",
+        highlight1: "Tools op werkplaatsniveau en nauwkeurige kalibratie",
+        highlight2: "Gedetailleerde digitale inspecties met prioriteiten",
+        highlight3: "Heldere planning, eerlijke communicatie, geen verborgen kosten",
+        highlight4: "Werkplek volgens hoge netheids- en kwaliteitsstandaarden",
+        highlight5: "Avond- en weekendservice op afspraak",
+        galleryTitle: "Werkplaats Galerij",
+        galleryIntro: "Een blik in onze nette, moderne werkplaats waar zowel luxe- als dagelijkse voertuigen met uiterste zorg worden behandeld.",
+        apptTitle: "Maak een Afspraak",
+        apptIntro: "Vul het formulier in en wij bevestigen je afspraak zo snel mogelijk. Voor dringende gevallen kan je ons rechtstreeks bellen.",
+        apptQuickContact: "Snelle contactlijn: <a href=\"tel:+32412345678\">+32412345678</a>",
+        labelName: "Naam",
+        labelPhone: "Telefoon",
+        labelEmail: "E-mail",
+        labelVehicle: "Voertuig",
+        labelService: "Dienst",
+        labelDate: "Gewenste datum",
+        labelDetails: "Extra details",
+        placeholderVehicle: "Bijv. BMW 3 Reeks - 2020",
+        placeholderDetails: "Beschrijf kort de klacht of gewenste werken",
+        optionDiag: "Motordiagnose",
+        optionBrakes: "Remmen & Ophanging",
+        optionMaintenance: "Periodiek Onderhoud",
+        optionSpecial: "Gespecialiseerde Herstelling",
+        optionTires: "Bandenservice",
+        submitAppt: "Afspraak Aanvragen",
+        apptNote: "Na verzenden sturen we je aanvraag automatisch door.",
+        apptSending: "Aanvraag wordt verzonden...",
+        apptSuccess: "Aanvraag succesvol verzonden. We nemen snel contact op.",
+        apptError: "Automatisch verzenden mislukt. Je mail-app wordt als back-up geopend.",
+        followTitle: "Volg Ons Werk",
+        followDesc: "Bekijk dagelijkse herstellingen, updates uit de werkplaats en projecthoogtepunten.",
+        followLink: "@ace.carrepair op Instagram",
+        contactTitle: "Contact & Locatie",
+        contactAddress: "<strong>Adres:</strong> Elzendreef 12, 2900 Schoten, België",
+        contactPhone: "<strong>Telefoon:</strong> +32412345678",
+        contactHours: "<strong>Openingsuren:</strong> Ma-Vr 8:00 - 18:00, Za 9:00 - 14:00",
+        contactEmail: "<strong>E-mail:</strong> jonas.everaert@outlook.com",
+        findUs: "Vind Ons",
+        quickCall: "Bel Nu",
+        quickWhatsApp: "WhatsApp",
+        quickBook: "Afspraak",
+        copyright: "© <span id=\"year\"></span> ACE Car Repair. Alle rechten voorbehouden."
+      },
+      en: {
+        navServices: "Services",
+        navAbout: "About",
+        navGallery: "Gallery",
+        navContact: "Contact",
+        heroEyebrow: "Certified Auto Specialists",
+        heroTitle: "Precision Engineering, Trusted Service",
+        heroSubtitle: "Expert automotive maintenance and repair for all makes and models.",
+        heroCta: "Book an Appointment",
+        servicesTitle: "Professional Services",
+        servicesIntro: "From advanced diagnostics to precision mechanical work, we deliver dealership-grade standards with transparent recommendations and reliable turnaround.",
+        service1Title: "Engine Diagnostics",
+        service1Desc: "Computerized analysis and deep mechanical inspection to quickly identify faults and optimize performance.",
+        service2Title: "Brake & Suspension",
+        service2Desc: "Precision servicing for braking systems and suspension components to ensure confidence, comfort, and safety.",
+        service3Title: "Routine Maintenance",
+        service3Desc: "Scheduled oil service, filter replacements, fluid checks, and full preventive care to extend vehicle life.",
+        service4Title: "Specialized Repairs",
+        service4Desc: "Complex drivetrain, electrical, and model-specific repairs completed with OEM-quality methods and tools.",
+        service5Title: "Tire Service",
+        service5Desc: "Tire checks, fitting, balancing, and seasonal swaps for optimal grip and safety.",
+        aboutTitle: "Technical Expertise. Transparent Process.",
+        aboutDesc: "ACE Car Repair combines certified mechanics, advanced diagnostic equipment, and disciplined workmanship to keep your vehicle performing at its best. Every estimate is clear, every recommendation is explained, and every repair is completed with accountability.",
+        stat1Title: "Certified",
+        stat1Desc: "Qualified master technicians",
+        stat2Title: "Multi-Brand",
+        stat2Desc: "Luxury and daily-driver support",
+        stat3Title: "Transparent",
+        stat3Desc: "Upfront pricing and approvals",
+        highlightsTitle: "Why Drivers Choose ACE",
+        highlight1: "Factory-level tools and precision calibration workflow",
+        highlight2: "Detailed digital inspections with service prioritization",
+        highlight3: "Clear timelines, honest communication, no hidden fees",
+        highlight4: "Workspaces maintained to premium cleanliness standards",
+        highlight5: "Evening and weekend service by appointment",
+        galleryTitle: "Workshop Gallery",
+        galleryIntro: "A look inside our clean, modern shop environment where both luxury and everyday vehicles receive meticulous attention.",
+        apptTitle: "Book an Appointment",
+        apptIntro: "Fill in the form and we will confirm your appointment as soon as possible. For urgent cases, call us directly.",
+        apptQuickContact: "Quick contact line: <a href=\"tel:+32412345678\">+32412345678</a>",
+        labelName: "Name",
+        labelPhone: "Phone",
+        labelEmail: "Email",
+        labelVehicle: "Vehicle",
+        labelService: "Service",
+        labelDate: "Preferred date",
+        labelDetails: "Extra details",
+        placeholderVehicle: "e.g. BMW 3 Series - 2020",
+        placeholderDetails: "Briefly describe the issue or requested work",
+        optionDiag: "Engine Diagnostics",
+        optionBrakes: "Brake & Suspension",
+        optionMaintenance: "Routine Maintenance",
+        optionSpecial: "Specialized Repairs",
+        optionTires: "Tire Service",
+        submitAppt: "Request Appointment",
+        apptNote: "After submit, your request is sent automatically.",
+        apptSending: "Sending your request...",
+        apptSuccess: "Request sent successfully. We will contact you soon.",
+        apptError: "Auto-send failed. Opening your email app as backup.",
+        followTitle: "Follow Our Work",
+        followDesc: "See daily repairs, workshop updates, and project highlights.",
+        followLink: "@ace.carrepair on Instagram",
+        contactTitle: "Contact & Location",
+        contactAddress: "<strong>Address:</strong> Elzendreef 12, 2900 Schoten, Belgium",
+        contactPhone: "<strong>Phone:</strong> +32412345678",
+        contactHours: "<strong>Hours:</strong> Mon-Fri 8:00 AM - 6:00 PM, Sat 9:00 AM - 2:00 PM",
+        contactEmail: "<strong>Email:</strong> jonas.everaert@outlook.com",
+        findUs: "Find Us",
+        quickCall: "Call Now",
+        quickWhatsApp: "WhatsApp",
+        quickBook: "Book",
+        copyright: "© <span id=\"year\"></span> ACE Car Repair. All rights reserved."
+      }
+    };
+
+    const titleByLang = {
+      nl: "ACE Car Repair | Precisiewerk, Betrouwbare Service",
+      en: "ACE Car Repair | Precision Engineering, Trusted Service"
+    };
+
+    const descByLang = {
+      nl: "ACE Car Repair biedt deskundig auto-onderhoud en herstellingen met gecertificeerde mecaniciens, transparante prijzen en betrouwbare service.",
+      en: "ACE Car Repair provides expert automotive maintenance and repair with certified mechanics, transparent pricing, and trusted service."
+    };
+
+    const setLanguage = (lang) => {
+      const dict = translations[lang] || translations.nl;
+      document.querySelectorAll("[data-i18n]").forEach((el) => {
+        const key = el.dataset.i18n;
+        const value = dict[key];
+        if (!value) return;
+        if (value.includes("<")) {
+          el.innerHTML = value;
+          return;
+        }
+        el.textContent = value;
+      });
+
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+        const key = el.dataset.i18nPlaceholder;
+        const value = dict[key];
+        if (!value) return;
+        el.setAttribute("placeholder", value);
+      });
+
+      document.title = titleByLang[lang] || titleByLang.nl;
+      const meta = document.querySelector('meta[name="description"]');
+      if (meta) {
+        meta.setAttribute("content", descByLang[lang] || descByLang.nl);
+      }
+
+      document.documentElement.lang = lang;
+      localStorage.setItem("ace_lang", lang);
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      document.querySelectorAll(".lang-btn").forEach((btn) => {
+        const active = btn.dataset.lang === lang;
+        btn.classList.toggle("active", active);
+        btn.setAttribute("aria-pressed", active ? "true" : "false");
+      });
+    };
+
+    document.querySelectorAll(".lang-btn").forEach((btn) => {
+      btn.addEventListener("click", () => setLanguage(btn.dataset.lang));
+    });
+
+    const siteHeader = document.querySelector(".site-header");
+    const navToggle = document.getElementById("navToggle");
+    const navLinks = document.querySelectorAll(".nav-links a");
+
+    const closeMobileMenu = () => {
+      if (!siteHeader || !navToggle) return;
+      siteHeader.classList.remove("menu-open");
+      navToggle.setAttribute("aria-expanded", "false");
+    };
+
+    navToggle?.addEventListener("click", () => {
+      if (!siteHeader) return;
+      const open = siteHeader.classList.toggle("menu-open");
+      navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+
+    navLinks.forEach((link) => link.addEventListener("click", closeMobileMenu));
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 860) closeMobileMenu();
+    });
+
+    const scrollBar = document.getElementById("scrollProgressBar");
+    const updateScrollProgress = () => {
+      if (!scrollBar) return;
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = maxScroll > 0 ? (scrollTop / maxScroll) * 100 : 0;
+      scrollBar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+    };
+    window.addEventListener("scroll", updateScrollProgress, { passive: true });
+    window.addEventListener("resize", updateScrollProgress);
+    updateScrollProgress();
+
+    const brandLogo = document.querySelector(".brand-logo");
+    if (brandLogo) {
+      brandLogo.addEventListener("error", () => {
+        const shell = brandLogo.closest(".brand-logo-shell");
+        if (shell) shell.classList.add("logo-fallback");
+        brandLogo.remove();
+      });
+    }
+
+    const appointmentForm = document.getElementById("appointmentForm");
+    const businessEmail = "jonas.everaert@outlook.com";
+    const emailJsServiceId = "service_0lpce1w";
+    const emailJsTemplateId = "template_n0hwi81";
+    const emailJsPublicKey = "dG26haK8YtN4T7-XM";
+    const appointmentDateInput = document.getElementById("apptDate");
+    const appointmentNote = document.getElementById("appointmentNote");
+    const appointmentSubmitBtn = appointmentForm?.querySelector("button[type=\"submit\"]");
+
+    if (appointmentDateInput) {
+      appointmentDateInput.min = new Date().toISOString().split("T")[0];
+    }
+
+    if (window.emailjs) {
+      window.emailjs.init({ publicKey: emailJsPublicKey });
+    }
+
+    appointmentForm?.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const data = new FormData(appointmentForm);
+      const lang = document.documentElement.lang === "en" ? "en" : "nl";
+      const dict = translations[lang] || translations.nl;
+      const selectedService = data.get("service") || "";
+      const selectedDate = data.get("date") || "";
+      const submittedAt = new Date().toLocaleString(lang === "en" ? "en-GB" : "nl-BE");
+      const subject = lang === "en"
+        ? `ACE Appointment Request | ${selectedService} | ${selectedDate}`
+        : `ACE Afspraakaanvraag | ${selectedService} | ${selectedDate}`;
+
+      const lines = lang === "en"
+        ? [
+          "ACE CAR REPAIR - APPOINTMENT REQUEST",
+          "====================================",
+          `Submitted: ${submittedAt}`,
+          `Preferred date: ${selectedDate}`,
+          "",
+          "CUSTOMER DETAILS",
+          "----------------",
+          `Name: ${data.get("name") || ""}`,
+          `Phone: ${data.get("phone") || ""}`,
+          `Email: ${data.get("email") || ""}`,
+          "",
+          "VEHICLE & SERVICE",
+          "-----------------",
+          `Vehicle: ${data.get("vehicle") || ""}`,
+          `Requested service: ${selectedService}`,
+          "",
+          "NOTES",
+          "-----",
+          `${data.get("details") || "No extra details provided."}`
+        ]
+        : [
+          "ACE CAR REPAIR - AFSPRAAKAANVRAAG",
+          "==================================",
+          `Ingediend: ${submittedAt}`,
+          `Gewenste datum: ${selectedDate}`,
+          "",
+          "KLANTGEGEVENS",
+          "-------------",
+          `Naam: ${data.get("name") || ""}`,
+          `Telefoon: ${data.get("phone") || ""}`,
+          `E-mail: ${data.get("email") || ""}`,
+          "",
+          "VOERTUIG & DIENST",
+          "-----------------",
+          `Voertuig: ${data.get("vehicle") || ""}`,
+          `Gevraagde dienst: ${selectedService}`,
+          "",
+          "EXTRA INFO",
+          "----------",
+          `${data.get("details") || "Geen extra details opgegeven."}`
+        ];
+
+      if (appointmentSubmitBtn) appointmentSubmitBtn.disabled = true;
+      if (appointmentNote) appointmentNote.textContent = dict.apptSending || "";
+
+      const templateParams = {
+        name: String(data.get("name") || ""),
+        phone: String(data.get("phone") || ""),
+        email: String(data.get("email") || ""),
+        vehicle: String(data.get("vehicle") || ""),
+        service: String(selectedService || ""),
+        preferred_date: String(selectedDate || ""),
+        details: String(data.get("details") || ""),
+        submitted_at: submittedAt,
+        subject
+      };
+
+      const openMailFallback = () => {
+        const mailtoUrl = `mailto:${businessEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
+        window.location.href = mailtoUrl;
+      };
+
+      if (!window.emailjs) {
+        if (appointmentNote) appointmentNote.textContent = dict.apptError || "";
+        openMailFallback();
+        if (appointmentSubmitBtn) appointmentSubmitBtn.disabled = false;
+        return;
+      }
+
+      window.emailjs.send(emailJsServiceId, emailJsTemplateId, templateParams, { publicKey: emailJsPublicKey })
+        .then(() => {
+          appointmentForm.reset();
+          if (appointmentDateInput) {
+            appointmentDateInput.min = new Date().toISOString().split("T")[0];
+          }
+          if (appointmentNote) appointmentNote.textContent = dict.apptSuccess || "";
+        })
+        .catch((err) => {
+          const status = err?.status ? ` [${err.status}]` : "";
+          const text = err?.text ? ` ${err.text}` : "";
+          if (appointmentNote) appointmentNote.textContent = `${dict.apptError || ""}${status}${text}`.trim();
+          openMailFallback();
+        })
+        .finally(() => {
+          if (appointmentSubmitBtn) appointmentSubmitBtn.disabled = false;
+        });
+    });
+
+    setLanguage(localStorage.getItem("ace_lang") || "nl");
+  </script>
+</body>
+</html>
+
+
