@@ -1,0 +1,782 @@
+﻿<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ACE Car Repair | Dashboard</title>
+  <meta name="description" content="Klantdashboard met afspraken, voertuigestatus, loyaliteitsstickers en login details." />
+  <style>
+    :root {
+      --bg: #101317;
+      --panel: #171c22;
+      --panel-soft: #1f252d;
+      --border: rgba(199, 204, 211, 0.22);
+      --text: #f3f6fb;
+      --muted: #a6b0bc;
+      --accent: #e11919;
+      --ok: #4ec786;
+      --warn: #f1bc53;
+      --radius: 14px;
+      --shadow: 0 16px 34px rgba(0, 0, 0, 0.35);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Montserrat", "Segoe UI", sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #0e1115 0%, #141920 45%, #101317 100%);
+    }
+    .container { width: min(1100px, 92%); margin-inline: auto; }
+    .top {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(13, 16, 20, 0.88);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .top-inner {
+      min-height: 74px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .brand { font-weight: 800; letter-spacing: 0.4px; }
+    .actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .btn {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 10px 12px;
+      color: var(--text);
+      background: var(--panel-soft);
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 0.84rem;
+      min-height: 42px;
+    }
+    .btn-accent {
+      border-color: rgba(225, 25, 25, 0.6);
+      background: rgba(225, 25, 25, 0.17);
+      color: #ffe4e4;
+    }
+    .lang-switch {
+      display: inline-flex;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 3px;
+      gap: 3px;
+    }
+    .lang-btn {
+      border: 0;
+      background: transparent;
+      color: #c7ccd3;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.76rem;
+      letter-spacing: 0.5px;
+      padding: 8px 11px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+    .lang-btn.active { background: var(--accent); color: #fff; }
+
+    main { padding: 24px 0 40px; }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+    }
+    .card h2 {
+      margin: 0 0 8px;
+      font-size: 1.02rem;
+    }
+    .muted { color: var(--muted); font-size: 0.92rem; }
+    .status-pill {
+      display: inline-flex;
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 0.76rem;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+      font-weight: 700;
+    }
+    .status-pill.pending { color: var(--warn); border-color: rgba(241, 188, 83, 0.45); }
+    .status-pill.confirmed { color: var(--ok); border-color: rgba(78, 199, 134, 0.45); }
+    .status-pill.completed { color: #f5f7ff; border-color: rgba(199, 204, 211, 0.45); }
+    .status-pill.declined { color: #ffa8a8; border-color: rgba(225, 25, 25, 0.45); }
+
+    .stamps {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .stamp {
+      height: 46px;
+      border-radius: 10px;
+      border: 1px dashed rgba(199, 204, 211, 0.32);
+      display: grid;
+      place-items: center;
+      font-size: 0.76rem;
+      color: #8e99a6;
+    }
+    .stamp.on {
+      border-style: solid;
+      border-color: rgba(225, 25, 25, 0.62);
+      color: transparent;
+      background:
+        linear-gradient(145deg, rgba(225, 25, 25, 0.24), rgba(225, 25, 25, 0.1)),
+        url("ace-logo-transparent.png") center/72% no-repeat;
+      font-weight: 700;
+    }
+    .list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+    .list-item {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: rgba(255,255,255,0.02);
+      padding: 10px;
+    }
+    .line {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      align-items: flex-start;
+    }
+    .line span:last-child { text-align: right; overflow-wrap: anywhere; }
+    .manager-tools {
+      display: grid;
+      gap: 10px;
+    }
+    .manager-form {
+      display: grid;
+      grid-template-columns: 1.6fr 0.6fr auto;
+      gap: 8px;
+    }
+    .manager-form-status {
+      display: grid;
+      grid-template-columns: 1.1fr 1.3fr 1fr auto;
+      gap: 8px;
+    }
+    .manager-form input {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+      padding: 10px 11px;
+      font: inherit;
+      min-height: 44px;
+    }
+    .manager-form-status input,
+    .manager-form-status select {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+      padding: 10px 11px;
+      font: inherit;
+      min-height: 44px;
+    }
+    .manager-form button {
+      border: 0;
+      border-radius: 9px;
+      background: rgba(225, 25, 25, 0.85);
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 10px 12px;
+      min-height: 44px;
+    }
+    .manager-form-status button {
+      border: 0;
+      border-radius: 9px;
+      background: rgba(43, 120, 255, 0.9);
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 10px 12px;
+      min-height: 44px;
+    }
+    .manager-msg { font-size: 0.85rem; color: var(--muted); }
+    .voucher-list {
+      margin-top: 10px;
+      display: grid;
+      gap: 6px;
+    }
+    .voucher-item {
+      border: 1px solid rgba(78, 199, 134, 0.42);
+      border-radius: 9px;
+      background: rgba(78, 199, 134, 0.11);
+      padding: 8px 10px;
+      font-size: 0.84rem;
+      color: #d8ffe9;
+      overflow-wrap: anywhere;
+    }
+    .voucher-item .voucher-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .voucher-item button {
+      border: 0;
+      border-radius: 8px;
+      background: rgba(225, 25, 25, 0.88);
+      color: #fff;
+      font-weight: 700;
+      padding: 7px 10px;
+      cursor: pointer;
+      min-height: 34px;
+    }
+
+    @media (max-width: 920px) {
+      .grid { grid-template-columns: 1fr; }
+      .brand { width: 100%; }
+      .actions { width: 100%; justify-content: space-between; }
+      .btn { flex: 1 1 120px; text-align: center; }
+    }
+    @media (max-width: 760px) {
+      .manager-form {
+        grid-template-columns: 1fr;
+      }
+      .manager-form-status {
+        grid-template-columns: 1fr;
+      }
+      .manager-form button {
+        width: 100%;
+      }
+      .manager-form-status button {
+        width: 100%;
+      }
+      .stamps {
+        grid-template-columns: repeat(5, minmax(42px, 1fr));
+      }
+      .stamp {
+        height: 40px;
+        font-size: 0.72rem;
+      }
+    }
+    @media (max-width: 540px) {
+      .container { width: min(1100px, 94%); }
+      .card { padding: 13px; }
+      .actions { gap: 6px; }
+      .lang-switch { width: 100%; justify-content: center; }
+      .btn { width: 100%; }
+      .line { flex-direction: column; gap: 2px; }
+      .line span:last-child { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="container top-inner">
+      <div class="brand">ACE Car Repair | Klantdashboard</div>
+      <div class="actions">
+        <div class="lang-switch" role="group" aria-label="Language switch">
+          <button class="lang-btn active" data-lang="nl" type="button">NL</button>
+          <button class="lang-btn" data-lang="en" type="button">EN</button>
+          <button class="lang-btn" data-lang="fr" type="button">FR</button>
+        </div>
+        <a class="btn" href="index.html" data-i18n="websiteBtn">Website</a>
+        <a class="btn" href="status.html" data-i18n="statusPageBtn">Live Status</a>
+        <button class="btn btn-accent" id="logoutBtn" type="button" data-i18n="logoutBtn">Uitloggen</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="grid">
+        <section class="card">
+          <h2 data-i18n="profileTitle">Mijn Profiel</h2>
+          <p class="muted" id="profileLine">Laden...</p>
+          <p class="muted" id="lastLoginLine"></p>
+        </section>
+
+        <section class="card">
+          <h2 data-i18n="loyaltyTitle">Loyaliteit (Stickers)</h2>
+          <p class="muted" id="loyaltyLine">Laden...</p>
+          <div class="stamps" id="stampGrid"></div>
+          <div class="voucher-list" id="voucherList"></div>
+        </section>
+
+        <section class="card" style="grid-column: 1 / -1;">
+          <h2 data-i18n="appointmentsTitle">Mijn Afspraken</h2>
+          <ul class="list" id="appointmentsList">
+            <li class="list-item muted">Laden...</li>
+          </ul>
+        </section>
+
+        <section class="card" style="grid-column: 1 / -1; display:none;" id="managerCard">
+          <h2 data-i18n="managerTitle">Manager Tools</h2>
+          <div class="manager-tools">
+            <form class="manager-form" id="grantStampForm">
+              <input type="email" id="grantEmail" placeholder="customer@email.com" required />
+              <input type="number" id="grantCount" min="1" max="20" value="1" required />
+              <button type="submit" data-i18n="grantBtn">Geef sticker(s)</button>
+            </form>
+            <form class="manager-form-status" id="updateStatusForm">
+              <input type="text" id="statusJobId" placeholder="Job ID (appointment id)" />
+              <input type="email" id="statusEmail" placeholder="customer@email.com (optional)" />
+              <select id="statusStage" required>
+                <option value="appointment_confirmed">appointment_confirmed</option>
+                <option value="diagnostic">diagnostic</option>
+                <option value="in_repair">in_repair</option>
+                <option value="quality_check">quality_check</option>
+                <option value="ready_for_pickup">ready_for_pickup</option>
+              </select>
+              <button type="submit" data-i18n="statusUpdateBtn">Update status</button>
+            </form>
+            <div class="manager-msg" id="managerMsg"></div>
+            <ul class="list" id="managerAccountsList"></ul>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const portalApiUrl = 'https://script.google.com/macros/s/AKfycbyVkiMyZjVEkZd9tSIcbvNI7AwlFnkaNlQ0g3L2yuBNdlEaV8-L8X1wXCIkqlZWve33cg/exec';
+    const token = localStorage.getItem('ace_portal_token') || '';
+    if (!token) window.location.href = 'account.html';
+    const dashboardCacheKey = 'ace_dashboard_cache_v1';
+    const translations = {
+      nl: {
+        pageTitle: 'ACE Car Repair | Klantdashboard',
+        websiteBtn: 'Website',
+        statusPageBtn: 'Live Status',
+        logoutBtn: 'Uitloggen',
+        profileTitle: 'Mijn Profiel',
+        loyaltyTitle: 'Loyaliteit (Stickers)',
+        appointmentsTitle: 'Mijn Afspraken',
+        managerTitle: 'Manager Tools',
+        grantBtn: 'Geef sticker(s)',
+        statusUpdateBtn: 'Update status',
+        grantOk: 'Sticker(s) toegekend.',
+        grantFail: 'Sticker toekennen mislukt.',
+        statusUpdateOk: 'Repair status bijgewerkt.',
+        statusUpdateFail: 'Repair status update mislukt.',
+        noAccounts: 'Nog geen accountgegevens.',
+        loading: 'Laden...',
+        noActive: 'Geen actieve afspraak.',
+        noAppointments: 'Nog geen afspraken gevonden.',
+        loyaltyLine: '{stamps} sticker(s), {rewards} reward(s) beschikbaar. Elke 5 stickers = 25% korting op je volgende nazicht/check-up.',
+        voucherTitle: 'Beschikbare vouchers:',
+        voucherEmpty: 'Nog geen voucher actief.',
+        voucherText: '{code} - {discount}% korting ({scope})',
+        voucherUseBtn: 'Gebruik',
+        voucherRedeemOk: 'Voucher gebruikt.',
+        voucherRedeemFail: 'Voucher gebruiken mislukt.',
+        profileLine: '{name} ({email})',
+        lastLogin: 'Laatste login: {value}',
+        createdAt: 'Aangemaakt',
+        date: 'Datum',
+        jobId: 'Job ID',
+        vehicle: 'Voertuig',
+        time: 'Tijd',
+        language: 'Taal',
+        timezone: 'Timezone',
+        client: 'Client',
+        serviceDefault: 'Dienst',
+        unknownStatus: 'ONBEKEND',
+        invalidSession: 'Sessie verlopen. Log opnieuw in.',
+        tempLoadError: 'Tijdelijke laadfout. Probeer opnieuw.'
+      },
+      en: {
+        pageTitle: 'ACE Car Repair | Customer Dashboard',
+        websiteBtn: 'Website',
+        statusPageBtn: 'Live Status',
+        logoutBtn: 'Logout',
+        profileTitle: 'My Profile',
+        loyaltyTitle: 'Loyalty (Stamps)',
+        appointmentsTitle: 'My Appointments',
+        managerTitle: 'Manager Tools',
+        grantBtn: 'Grant stamp(s)',
+        statusUpdateBtn: 'Update status',
+        grantOk: 'Stamp(s) granted.',
+        grantFail: 'Grant failed.',
+        statusUpdateOk: 'Repair status updated.',
+        statusUpdateFail: 'Repair status update failed.',
+        noAccounts: 'No account records yet.',
+        loading: 'Loading...',
+        noActive: 'No active appointment.',
+        noAppointments: 'No appointments found yet.',
+        loyaltyLine: '{stamps} stamp(s), {rewards} reward(s) available. Every 5 stamps = 25% off your next inspection/check-up.',
+        voucherTitle: 'Available vouchers:',
+        voucherEmpty: 'No active voucher yet.',
+        voucherText: '{code} - {discount}% discount ({scope})',
+        voucherUseBtn: 'Use',
+        voucherRedeemOk: 'Voucher used.',
+        voucherRedeemFail: 'Voucher redeem failed.',
+        profileLine: '{name} ({email})',
+        lastLogin: 'Last login: {value}',
+        createdAt: 'Created',
+        date: 'Date',
+        jobId: 'Job ID',
+        vehicle: 'Vehicle',
+        time: 'Time',
+        language: 'Language',
+        timezone: 'Timezone',
+        client: 'Client',
+        serviceDefault: 'Service',
+        unknownStatus: 'UNKNOWN',
+        invalidSession: 'Session expired. Please log in again.',
+        tempLoadError: 'Temporary load error. Please retry.'
+      },
+      fr: {
+        pageTitle: 'ACE Car Repair | Tableau Client',
+        websiteBtn: 'Site',
+        statusPageBtn: 'Live Status',
+        logoutBtn: 'Se dÃ©connecter',
+        profileTitle: 'Mon Profil',
+        loyaltyTitle: 'FidÃ©litÃ© (Stickers)',
+        appointmentsTitle: 'Mes Rendez-vous',
+        managerTitle: 'Outils Manager',
+        grantBtn: 'Donner sticker(s)',
+        statusUpdateBtn: 'Mettre a jour statut',
+        grantOk: 'Sticker(s) attribuÃ©(s).',
+        grantFail: 'Attribution Ã©chouÃ©e.',
+        statusUpdateOk: 'Statut de reparation mis a jour.',
+        statusUpdateFail: 'Echec mise a jour statut.',
+        noAccounts: 'Aucun compte enregistrÃ©.',
+        loading: 'Chargement...',
+        noActive: 'Aucun rendez-vous actif.',
+        noAppointments: 'Aucun rendez-vous trouvÃ©.',
+        loyaltyLine: '{stamps} sticker(s), {rewards} rÃ©compense(s) disponible(s). Chaque 5 stickers = 25% de rÃ©duction sur votre prochain contrÃ´le/check-up.',
+        voucherTitle: 'Bons disponibles :',
+        voucherEmpty: 'Aucun bon actif.',
+        voucherText: '{code} - {discount}% rÃ©duction ({scope})',
+        voucherUseBtn: 'Utiliser',
+        voucherRedeemOk: 'Bon utilisÃ©.',
+        voucherRedeemFail: 'Echec utilisation bon.',
+        profileLine: '{name} ({email})',
+        lastLogin: 'DerniÃ¨re connexion : {value}',
+        createdAt: 'CrÃ©Ã©',
+        date: 'Date',
+        jobId: 'ID Job',
+        vehicle: 'VÃ©hicule',
+        time: 'Heure',
+        language: 'Langue',
+        timezone: 'Fuseau',
+        client: 'Client',
+        serviceDefault: 'Service',
+        unknownStatus: 'INCONNU',
+        invalidSession: 'Session expirÃ©e. Reconnectez-vous.',
+        tempLoadError: 'Erreur temporaire. RÃ©essayez.'
+      }
+    };
+    let currentLang = localStorage.getItem('ace_lang') || 'nl';
+
+    const profileLine = document.getElementById('profileLine');
+    const lastLoginLine = document.getElementById('lastLoginLine');
+    const loyaltyLine = document.getElementById('loyaltyLine');
+    const stampGrid = document.getElementById('stampGrid');
+    const appointmentsList = document.getElementById('appointmentsList');
+    const voucherList = document.getElementById('voucherList');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const managerCard = document.getElementById('managerCard');
+    const grantStampForm = document.getElementById('grantStampForm');
+    const grantEmail = document.getElementById('grantEmail');
+    const grantCount = document.getElementById('grantCount');
+    const updateStatusForm = document.getElementById('updateStatusForm');
+    const statusJobId = document.getElementById('statusJobId');
+    const statusEmail = document.getElementById('statusEmail');
+    const statusStage = document.getElementById('statusStage');
+    const managerMsg = document.getElementById('managerMsg');
+    const managerAccountsList = document.getElementById('managerAccountsList');
+    let lastDashboardData = null;
+    const t = (key) => {
+      const langPack = translations[currentLang] || {};
+      if (Object.prototype.hasOwnProperty.call(langPack, key)) return langPack[key];
+      const fallback = translations.nl || {};
+      return fallback[key] || '';
+    };
+    const applyLanguage = (lang) => {
+      currentLang = translations[lang] ? lang : 'nl';
+      localStorage.setItem('ace_lang', currentLang);
+      document.documentElement.lang = currentLang;
+      document.title = t('pageTitle');
+      document.querySelectorAll('[data-i18n]').forEach((el) => {
+        const key = el.dataset.i18n;
+        const value = t(key);
+        if (value) el.textContent = value;
+      });
+      document.querySelectorAll('.lang-btn').forEach((btn) => {
+        btn.classList.toggle('active', btn.dataset.lang === currentLang);
+      });
+      if (lastDashboardData) {
+        render(lastDashboardData);
+      }
+    };
+    document.querySelectorAll('.lang-btn').forEach((btn) => {
+      btn.addEventListener('click', () => applyLanguage(btn.dataset.lang));
+    });
+    applyLanguage(currentLang);
+
+    const formatDate = (value) => {
+      const d = new Date(value);
+      if (Number.isNaN(d.getTime())) return String(value || '-');
+      const locale = currentLang === 'fr' ? 'fr-BE' : (currentLang === 'en' ? 'en-GB' : 'nl-BE');
+      return d.toLocaleString(locale);
+    };
+
+    const statusClass = (status) => {
+      const s = String(status || '').toUpperCase();
+      if (s === 'PENDING') return 'pending';
+      if (s === 'CONFIRMED') return 'confirmed';
+      if (s === 'COMPLETED') return 'completed';
+      if (s === 'DECLINED') return 'declined';
+      return '';
+    };
+    const fetchDashboard = async () => {
+      const response = await fetch(portalApiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ action: 'dashboard', token })
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || data?.ok !== true) {
+        throw new Error(data?.error || 'Dashboard laden mislukt.');
+      }
+      return data;
+    };
+
+    const grantStamp = async (targetEmail, delta) => {
+      const response = await fetch(portalApiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ action: 'grant_stamp', token, target_email: targetEmail, delta })
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || data?.ok !== true) {
+        throw new Error(data?.error || t('grantFail'));
+      }
+      return data;
+    };
+    const updateRepairStatus = async (jobId, email, status) => {
+      const response = await fetch(portalApiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({
+          action: 'update_repair_status',
+          token,
+          job_id: jobId,
+          customer_email: email,
+          currentStatus: status
+        })
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || data?.ok !== true) {
+        throw new Error(data?.error || t('statusUpdateFail'));
+      }
+      return data;
+    };
+    const redeemVoucher = async (code) => {
+      const response = await fetch(portalApiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ action: 'redeem_voucher', token, code })
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || data?.ok !== true) {
+        throw new Error(data?.error || t('voucherRedeemFail'));
+      }
+      return data;
+    };
+
+    const renderStamps = (summary) => {
+      stampGrid.innerHTML = '';
+      const towardNext = Number(summary.stamps_toward_next_reward || 0);
+      for (let i = 0; i < 5; i += 1) {
+        const div = document.createElement('div');
+        div.className = `stamp ${i < towardNext ? 'on' : ''}`;
+        div.textContent = i < towardNext ? 'Sticker' : `Slot ${i + 1}`;
+        stampGrid.appendChild(div);
+      }
+    };
+
+    const renderAppointments = (items) => {
+      if (!Array.isArray(items) || items.length === 0) {
+        appointmentsList.innerHTML = `<li class="list-item muted">${t('noAppointments')}</li>`;
+        return;
+      }
+      appointmentsList.innerHTML = items.map((a) => `
+        <li class="list-item">
+          <div class="line">
+            <strong>${a.service || t('serviceDefault')}</strong>
+            <span class="status-pill ${statusClass(a.status)}">${a.status || t('unknownStatus')}</span>
+          </div>
+          <div class="line"><span>${t('jobId')}</span><span>${a.id || '-'}</span></div>
+          <div class="line"><span>${t('date')}</span><span>${a.preferred_date || '-'}</span></div>
+          <div class="line"><span>${t('vehicle')}</span><span>${a.vehicle || '-'}</span></div>
+          <div class="line"><span>${t('createdAt')}</span><span>${formatDate(a.created_at)}</span></div>
+        </li>
+      `).join('');
+    };
+
+    const renderVouchers = (items) => {
+      if (!Array.isArray(items) || items.length === 0) {
+        voucherList.innerHTML = `<div class="voucher-item">${t('voucherEmpty')}</div>`;
+        return;
+      }
+      const title = `<div class="muted">${t('voucherTitle')}</div>`;
+      const body = items.map((v) => {
+        const text = t('voucherText')
+          .replace('{code}', String(v.code || '-'))
+          .replace('{discount}', String(v.discount_percent || 25))
+          .replace('{scope}', String(v.service_scope || 'inspection'));
+        const code = String(v.code || '');
+        return `<div class="voucher-item"><div class="voucher-row"><span>${text}</span><button type="button" class="voucher-use-btn" data-code="${code}">${t('voucherUseBtn')}</button></div></div>`;
+      }).join('');
+      voucherList.innerHTML = `${title}${body}`;
+      voucherList.querySelectorAll('.voucher-use-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          managerMsg.textContent = t('loading');
+          redeemVoucher(String(btn.dataset.code || ''))
+            .then(() => fetchDashboard())
+            .then((data) => {
+              lastDashboardData = data;
+              localStorage.setItem(dashboardCacheKey, JSON.stringify(data));
+              render(data);
+              managerMsg.textContent = t('voucherRedeemOk');
+            })
+            .catch((err) => {
+              managerMsg.textContent = String(err?.message || t('voucherRedeemFail'));
+            });
+        });
+      });
+    };
+
+    const renderManagerAccounts = (items) => {
+      if (!Array.isArray(items) || items.length === 0) {
+        managerAccountsList.innerHTML = `<li class="list-item muted">${t('noAccounts')}</li>`;
+        return;
+      }
+      managerAccountsList.innerHTML = items.map((u) => `
+        <li class="list-item">
+          <div class="line"><span>${u.name || '-'}</span><span>${u.email || '-'}</span></div>
+          <div class="line"><span>Role: ${u.role || '-'}</span><span>Stickers: ${Number(u.stamp_count || 0)}</span></div>
+        </li>
+      `).join('');
+    };
+
+    const render = (data) => {
+      const user = data.user || {};
+      const loyalty = data.loyalty || {};
+      const vouchers = data.vouchers || [];
+      profileLine.textContent = t('profileLine')
+        .replace('{name}', user.name || 'Customer')
+        .replace('{email}', user.email || '-');
+      lastLoginLine.textContent = t('lastLogin').replace('{value}', formatDate(user.last_login_at));
+      loyaltyLine.textContent = t('loyaltyLine')
+        .replace('{stamps}', String(loyalty.stamp_count || 0))
+        .replace('{rewards}', String(loyalty.rewards_available || 0));
+      renderStamps(loyalty);
+      renderVouchers(vouchers);
+
+      renderAppointments(data.appointments || []);
+      if (data.user?.role === 'manager') {
+        managerCard.style.display = 'block';
+        renderManagerAccounts(data.manager_tools?.accounts || []);
+      } else {
+        managerCard.style.display = 'none';
+      }
+    };
+
+    fetchDashboard()
+      .then((data) => {
+        lastDashboardData = data;
+        localStorage.setItem(dashboardCacheKey, JSON.stringify(data));
+        render(data);
+      })
+      .catch((err) => {
+        const msg = String(err?.message || '');
+        const sessionError = /Sessie ongeldig|expired|invalid|verlopen/i.test(msg);
+        profileLine.textContent = sessionError ? t('invalidSession') : (msg || t('tempLoadError'));
+        if (sessionError) {
+          localStorage.removeItem('ace_portal_token');
+          localStorage.removeItem('ace_portal_user');
+          setTimeout(() => { window.location.href = 'account.html'; }, 1200);
+        }
+      });
+
+    try {
+      const cachedText = localStorage.getItem(dashboardCacheKey);
+      if (cachedText) {
+        const cached = JSON.parse(cachedText);
+        if (cached && cached.ok) {
+          lastDashboardData = cached;
+          render(cached);
+        }
+      }
+    } catch (_err) {
+      // Ignore cache parsing errors and continue with live fetch.
+    }
+
+    logoutBtn.addEventListener('click', () => {
+      localStorage.removeItem('ace_portal_token');
+      localStorage.removeItem('ace_portal_user');
+      window.location.href = 'account.html';
+    });
+
+    grantStampForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      managerMsg.textContent = t('loading');
+      grantStamp(String(grantEmail.value || '').trim(), Number(grantCount.value || 1))
+        .then(() => fetchDashboard())
+        .then((data) => {
+          lastDashboardData = data;
+          localStorage.setItem(dashboardCacheKey, JSON.stringify(data));
+          render(data);
+          managerMsg.textContent = t('grantOk');
+        })
+        .catch((err) => {
+          managerMsg.textContent = String(err?.message || t('grantFail'));
+        });
+    });
+
+    updateStatusForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      managerMsg.textContent = t('loading');
+      updateRepairStatus(
+        String(statusJobId.value || '').trim(),
+        String(statusEmail.value || '').trim(),
+        String(statusStage.value || '').trim()
+      )
+        .then(() => fetchDashboard())
+        .then((data) => {
+          lastDashboardData = data;
+          localStorage.setItem(dashboardCacheKey, JSON.stringify(data));
+          render(data);
+          managerMsg.textContent = t('statusUpdateOk');
+        })
+        .catch((err) => {
+          managerMsg.textContent = String(err?.message || t('statusUpdateFail'));
+        });
+    });
+  </script>
+</body>
+</html>
+

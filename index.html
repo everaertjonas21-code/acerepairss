@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
   <style>
     :root {
       --charcoal: #15171a;
@@ -265,6 +266,29 @@
       gap: 3px;
     }
 
+    .portal-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(225, 25, 25, 0.46);
+      background: rgba(225, 25, 25, 0.14);
+      color: #ffe6e6;
+      font-size: 0.84rem;
+      font-weight: 700;
+      letter-spacing: 0.25px;
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .portal-link:hover {
+      transform: translateY(-1px);
+      background: rgba(225, 25, 25, 0.2);
+      border-color: rgba(225, 25, 25, 0.7);
+    }
+
     .lang-btn {
       border: 0;
       background: transparent;
@@ -307,7 +331,9 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 80% 20%, rgba(225, 25, 25, 0.18), transparent 42%);
+      background:
+        radial-gradient(circle at 80% 20%, rgba(225, 25, 25, 0.18), transparent 42%),
+        linear-gradient(180deg, rgba(22, 26, 31, 0) 58%, rgba(22, 26, 31, 0.92) 92%, #161a1f 100%);
       z-index: -1;
     }
 
@@ -350,6 +376,7 @@
       align-items: center;
       justify-content: center;
       padding: 13px 24px;
+      min-height: 44px;
       border-radius: 10px;
       font-weight: 700;
       letter-spacing: 0.25px;
@@ -371,7 +398,21 @@
     }
 
     #services {
+      position: relative;
       background: linear-gradient(180deg, #161a1f 0%, #13161a 100%);
+    }
+
+    #services::before {
+      content: "";
+      position: absolute;
+      top: -92px;
+      left: 0;
+      right: 0;
+      height: 120px;
+      pointer-events: none;
+      background:
+        radial-gradient(70% 85px at 50% 100%, rgba(225, 25, 25, 0.16), rgba(225, 25, 25, 0) 68%),
+        linear-gradient(180deg, rgba(22, 26, 31, 0) 0%, #161a1f 78%);
     }
 
     .services-grid {
@@ -569,6 +610,14 @@
       color: var(--text-muted);
     }
 
+    .appointment-guest-note {
+      margin-top: 12px;
+      font-size: 0.9rem;
+      color: #d8dee6;
+      border-left: 3px solid rgba(225, 25, 25, 0.5);
+      padding-left: 10px;
+    }
+
     .quick-contact {
       margin-top: 14px;
       color: var(--silver);
@@ -606,11 +655,213 @@
       color: var(--text);
       padding: 11px 12px;
       font: inherit;
+      min-height: 44px;
+    }
+
+    .field select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image:
+        linear-gradient(45deg, transparent 50%, #e11919 50%),
+        linear-gradient(135deg, #e11919 50%, transparent 50%);
+      background-position:
+        calc(100% - 18px) calc(50% - 3px),
+        calc(100% - 12px) calc(50% - 3px);
+      background-size: 6px 6px, 6px 6px;
+      background-repeat: no-repeat;
+      padding-right: 34px;
+      color: var(--silver-bright);
+    }
+
+    .field select option {
+      background: #11151a;
+      color: #ff4a4a;
+    }
+
+    .field select option:checked {
+      background: #1f252c;
+      color: #ffffff;
     }
 
     .field textarea {
       min-height: 118px;
       resize: vertical;
+    }
+
+    .field input[type="date"] {
+      color-scheme: dark;
+      appearance: none;
+      -webkit-appearance: none;
+      padding-right: 12px;
+      color: var(--silver-bright);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.015)),
+        rgba(13, 16, 20, 0.85);
+      border-color: rgba(199, 204, 211, 0.24);
+    }
+
+    .field input[type="date"]::-webkit-calendar-picker-indicator {
+      cursor: pointer;
+      filter: invert(40%) sepia(97%) saturate(2141%) hue-rotate(338deg) brightness(101%) contrast(96%);
+      opacity: 0.95;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .field input[type="date"]:hover::-webkit-calendar-picker-indicator {
+      opacity: 1;
+      transform: scale(1.06);
+    }
+
+    .field input[type="date"]::-webkit-datetime-edit,
+    .field input[type="date"]::-webkit-datetime-edit-text,
+    .field input[type="date"]::-webkit-datetime-edit-month-field,
+    .field input[type="date"]::-webkit-datetime-edit-day-field,
+    .field input[type="date"]::-webkit-datetime-edit-year-field {
+      color: var(--silver-bright);
+      font-weight: 500;
+    }
+
+    .appt-alt-date {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--silver-bright);
+      padding: 11px 12px;
+      font: inherit;
+    }
+
+    .appt-alt-date:focus {
+      outline: none;
+      border-color: rgba(225, 25, 25, 0.6);
+      box-shadow: 0 0 0 3px rgba(225, 25, 25, 0.15);
+    }
+
+    .flatpickr-calendar {
+      background: #12161b;
+      border: 1px solid rgba(199, 204, 211, 0.22);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+      border-radius: 12px;
+    }
+
+    .flatpickr-months .flatpickr-month,
+    .flatpickr-current-month .flatpickr-monthDropdown-months,
+    .flatpickr-current-month input.cur-year {
+      color: #f4f7fb;
+      fill: #f4f7fb;
+    }
+
+    .flatpickr-current-month .flatpickr-monthDropdown-months {
+      background: #1a1f26;
+      border: 1px solid rgba(199, 204, 211, 0.28);
+      border-radius: 8px;
+      padding: 3px 8px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-right: 8px;
+      -webkit-text-fill-color: #ffffff;
+    }
+
+    .flatpickr-current-month .flatpickr-monthDropdown-months option {
+      background: #10151b;
+      color: #ffffff;
+    }
+
+    .flatpickr-current-month .flatpickr-monthDropdown-months option.month-available {
+      color: #67e592;
+    }
+
+    .flatpickr-current-month .flatpickr-monthDropdown-months option.month-full {
+      color: #ff6f6f;
+    }
+
+    .flatpickr-current-month .flatpickr-monthDropdown-months:hover,
+    .flatpickr-current-month .flatpickr-monthDropdown-months:active,
+    .flatpickr-current-month .flatpickr-monthDropdown-months:focus {
+      background: #1f252d;
+      color: #ffffff;
+      -webkit-text-fill-color: #ffffff;
+    }
+
+    .flatpickr-current-month .flatpickr-monthDropdown-months option:checked,
+    .flatpickr-current-month .flatpickr-monthDropdown-months option:hover {
+      background: #2a323c;
+      color: #ffffff;
+    }
+
+    .flatpickr-current-month .flatpickr-monthDropdown-months.month-status-available {
+      color: #67e592;
+      -webkit-text-fill-color: #67e592;
+    }
+
+    .flatpickr-current-month .flatpickr-monthDropdown-months.month-status-full {
+      color: #ff6f6f;
+      -webkit-text-fill-color: #ff6f6f;
+    }
+
+    .flatpickr-current-month input.cur-year {
+      background: #1a1f26;
+      border: 1px solid rgba(199, 204, 211, 0.28);
+      border-radius: 8px;
+      color: #ffffff;
+      font-weight: 700;
+      padding: 3px 6px;
+      min-width: 72px;
+    }
+
+    .flatpickr-current-month input.cur-year:focus,
+    .flatpickr-current-month .flatpickr-monthDropdown-months:focus {
+      outline: none;
+      border-color: rgba(225, 25, 25, 0.7);
+      box-shadow: 0 0 0 2px rgba(225, 25, 25, 0.2);
+    }
+
+    .flatpickr-weekdays {
+      background: #151a21;
+      border-bottom: 1px solid rgba(199, 204, 211, 0.18);
+    }
+
+    span.flatpickr-weekday {
+      color: #9ea8b5;
+      font-weight: 700;
+    }
+
+    .flatpickr-day {
+      color: #e7ecf2;
+      border-radius: 8px;
+    }
+
+    .flatpickr-day:hover {
+      background: rgba(225, 25, 25, 0.2);
+      border-color: rgba(225, 25, 25, 0.45);
+    }
+
+    .flatpickr-day.today {
+      border-color: rgba(225, 25, 25, 0.5);
+      color: #ff8a8a;
+    }
+
+    .flatpickr-day.selected,
+    .flatpickr-day.startRange,
+    .flatpickr-day.endRange {
+      background: #e11919;
+      border-color: #e11919;
+      color: #fff;
+    }
+
+    .flatpickr-day.flatpickr-disabled,
+    .flatpickr-day.flatpickr-disabled:hover {
+      color: #586170;
+      background: transparent;
+      border-color: transparent;
+    }
+
+    .flatpickr-day.day-unavailable,
+    .flatpickr-day.day-unavailable:hover {
+      color: #ff7474;
+      background: rgba(225, 25, 25, 0.14);
+      border-color: rgba(225, 25, 25, 0.34);
     }
 
     .field input:focus,
@@ -790,6 +1041,8 @@
 
       .nav-toggle {
         display: inline-flex;
+        width: 46px;
+        height: 46px;
       }
 
       .brand-logo {
@@ -831,13 +1084,19 @@
       .nav-links a {
         display: block;
         width: 100%;
-        padding: 9px 10px;
+        padding: 11px 12px;
+        min-height: 44px;
         border-radius: 8px;
         background: rgba(255, 255, 255, 0.02);
       }
 
       .lang-switch {
         align-self: flex-start;
+      }
+
+      .portal-link {
+        width: 100%;
+        min-height: 44px;
       }
 
       .hero {
@@ -867,6 +1126,7 @@
         min-width: 98px;
         padding: 9px 12px;
         font-size: 0.78rem;
+        min-height: 42px;
       }
     }
 
@@ -877,6 +1137,80 @@
 
       .hero p {
         font-size: 0.98rem;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .container {
+        width: min(1140px, 94%);
+      }
+
+      .site-header {
+        padding: 10px 0;
+      }
+
+      .brand {
+        width: calc(100% - 58px);
+      }
+
+      .brand-logo {
+        width: 94px;
+      }
+
+      .brand-name {
+        font-size: 0.8rem;
+      }
+
+      .lang-switch {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .lang-btn {
+        padding: 8px 12px;
+      }
+
+      .hero {
+        min-height: 76vh;
+      }
+
+      .hero-content {
+        padding: 22px 0 28px;
+      }
+
+      .hero h1 {
+        font-size: clamp(1.85rem, 8vw, 2.3rem);
+      }
+
+      .hero .btn {
+        width: 100%;
+      }
+
+      .appointment-info,
+      .appointment-form,
+      .contact-card,
+      .map-card {
+        padding: 16px;
+      }
+
+      .field input,
+      .field select,
+      .field textarea,
+      .appt-alt-date {
+        font-size: 16px;
+      }
+
+      .quick-actions {
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .quick-action {
+        min-width: 0;
+        width: 100%;
+        padding: 10px 8px;
       }
     }
 
@@ -923,7 +1257,9 @@
         <div class="lang-switch" role="group" aria-label="Language switch">
           <button class="lang-btn active" data-lang="nl" type="button" aria-pressed="true">NL</button>
           <button class="lang-btn" data-lang="en" type="button" aria-pressed="false">EN</button>
+          <button class="lang-btn" data-lang="fr" type="button" aria-pressed="false">FR</button>
         </div>
+        <a class="portal-link" href="account.html" data-i18n="navPortal">Klantportaal</a>
       </div>
     </div>
   </header>
@@ -1035,6 +1371,7 @@
         <article class="appointment-info reveal">
           <h2 class="section-title" data-i18n="apptTitle">Maak een Afspraak</h2>
           <p data-i18n="apptIntro">Vul het formulier in en wij bevestigen je afspraak zo snel mogelijk. Voor dringende gevallen kan je ons rechtstreeks bellen.</p>
+          <p class="appointment-guest-note" data-i18n="apptGuestNote">Geen account nodig: afspraken aanvragen blijft volledig zonder registratie.</p>
           <p class="quick-contact" data-i18n="apptQuickContact">Snelle contactlijn: <a href="tel:+32412345678">+32412345678</a></p>
         </article>
         <form class="appointment-form reveal" id="appointmentForm">
@@ -1067,7 +1404,7 @@
             </div>
             <div class="field">
               <label for="apptDate" data-i18n="labelDate">Gewenste datum</label>
-              <input id="apptDate" name="date" type="date" required />
+              <input id="apptDate" name="date" type="text" inputmode="numeric" placeholder="dd/mm/jjjj" required />
             </div>
             <div class="field field-full">
               <label for="apptDetails" data-i18n="labelDetails">Extra details</label>
@@ -1118,7 +1455,9 @@
     <a class="quick-action book" href="#appointment" data-i18n="quickBook">Afspraak</a>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/nl.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/fr.js"></script>
   <script>
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -1138,6 +1477,7 @@
         navAbout: "Over Ons",
         navGallery: "Galerij",
         navContact: "Contact",
+        navPortal: "Klantportaal",
         heroEyebrow: "Gecertificeerde Autospecialisten",
         heroTitle: "Precisiewerk, Betrouwbare Service",
         heroSubtitle: "Deskundig onderhoud en herstellingen voor alle merken en modellen.",
@@ -1172,6 +1512,7 @@
         galleryIntro: "Een blik in onze nette, moderne werkplaats waar zowel luxe- als dagelijkse voertuigen met uiterste zorg worden behandeld.",
         apptTitle: "Maak een Afspraak",
         apptIntro: "Vul het formulier in en wij bevestigen je afspraak zo snel mogelijk. Voor dringende gevallen kan je ons rechtstreeks bellen.",
+        apptGuestNote: "Geen account nodig: afspraken aanvragen blijft volledig zonder registratie.",
         apptQuickContact: "Snelle contactlijn: <a href=\"tel:+32412345678\">+32412345678</a>",
         labelName: "Naam",
         labelPhone: "Telefoon",
@@ -1188,10 +1529,11 @@
         optionSpecial: "Gespecialiseerde Herstelling",
         optionTires: "Bandenservice",
         submitAppt: "Afspraak Aanvragen",
-        apptNote: "Na verzenden sturen we je aanvraag automatisch door.",
+        apptNote: "Na verzenden staat je aanvraag in wachtrij tot bevestiging.",
         apptSending: "Aanvraag wordt verzonden...",
-        apptSuccess: "Aanvraag succesvol verzonden. We nemen snel contact op.",
+        apptSuccess: "Aanvraag verzonden. Je ontvangt na bevestiging of weigering automatisch een e-mail.",
         apptError: "Automatisch verzenden mislukt. Je mail-app wordt als back-up geopend.",
+        apptInvalidDate: "Kies een beschikbare datum (niet op zondag of op te korte termijn).",
         followTitle: "Volg Ons Werk",
         followDesc: "Bekijk dagelijkse herstellingen, updates uit de werkplaats en projecthoogtepunten.",
         followLink: "@ace.carrepair op Instagram",
@@ -1211,6 +1553,7 @@
         navAbout: "About",
         navGallery: "Gallery",
         navContact: "Contact",
+        navPortal: "Customer Portal",
         heroEyebrow: "Certified Auto Specialists",
         heroTitle: "Precision Engineering, Trusted Service",
         heroSubtitle: "Expert automotive maintenance and repair for all makes and models.",
@@ -1245,6 +1588,7 @@
         galleryIntro: "A look inside our clean, modern shop environment where both luxury and everyday vehicles receive meticulous attention.",
         apptTitle: "Book an Appointment",
         apptIntro: "Fill in the form and we will confirm your appointment as soon as possible. For urgent cases, call us directly.",
+        apptGuestNote: "No account required: booking an appointment stays fully guest-friendly.",
         apptQuickContact: "Quick contact line: <a href=\"tel:+32412345678\">+32412345678</a>",
         labelName: "Name",
         labelPhone: "Phone",
@@ -1261,10 +1605,11 @@
         optionSpecial: "Specialized Repairs",
         optionTires: "Tire Service",
         submitAppt: "Request Appointment",
-        apptNote: "After submit, your request is sent automatically.",
+        apptNote: "After submit, your request is pending confirmation.",
         apptSending: "Sending your request...",
-        apptSuccess: "Request sent successfully. We will contact you soon.",
+        apptSuccess: "Request sent. You will automatically receive an email after approval or decline.",
         apptError: "Auto-send failed. Opening your email app as backup.",
+        apptInvalidDate: "Please choose an available date (not Sunday or too short notice).",
         followTitle: "Follow Our Work",
         followDesc: "See daily repairs, workshop updates, and project highlights.",
         followLink: "@ace.carrepair on Instagram",
@@ -1278,17 +1623,227 @@
         quickWhatsApp: "WhatsApp",
         quickBook: "Book",
         copyright: "© <span id=\"year\"></span> ACE Car Repair. All rights reserved."
+      },
+      fr: {
+        navServices: "Services",
+        navAbout: "À Propos",
+        navGallery: "Galerie",
+        navContact: "Contact",
+        navPortal: "Portail Client",
+        heroEyebrow: "Spécialistes Auto Certifiés",
+        heroTitle: "Ingénierie de Précision, Service de Confiance",
+        heroSubtitle: "Entretien et réparation automobile experts pour toutes marques et tous modèles.",
+        heroCta: "Prendre Rendez-vous",
+        servicesTitle: "Services Professionnels",
+        servicesIntro: "Du diagnostic avancé à la mécanique de précision, nous offrons une qualité équivalente au concessionnaire avec des conseils clairs et des délais fiables.",
+        service1Title: "Diagnostic Moteur",
+        service1Desc: "Analyse informatisée et inspection mécanique approfondie pour identifier rapidement les pannes et optimiser les performances.",
+        service2Title: "Freins & Suspension",
+        service2Desc: "Entretien précis des systèmes de freinage et de suspension pour garantir sécurité, confort et maîtrise.",
+        service3Title: "Entretien Périodique",
+        service3Desc: "Vidange, remplacement des filtres, contrôle des fluides et entretien préventif complet pour prolonger la durée de vie du véhicule.",
+        service4Title: "Réparations Spécialisées",
+        service4Desc: "Réparations complexes de transmission, d’électricité et spécifiques aux modèles avec des méthodes et outils de qualité OEM.",
+        service5Title: "Service Pneus",
+        service5Desc: "Contrôle, montage, équilibrage et changement saisonnier des pneus pour une adhérence et une sécurité optimales.",
+        aboutTitle: "Expertise Technique. Processus Transparent.",
+        aboutDesc: "ACE Car Repair associe des mécaniciens certifiés, des équipements de diagnostic avancés et un travail rigoureux pour maintenir votre véhicule à son meilleur niveau. Chaque devis est clair, chaque recommandation est expliquée, et chaque réparation est réalisée avec responsabilité.",
+        stat1Title: "Certifié",
+        stat1Desc: "Techniciens qualifiés",
+        stat2Title: "Multi-Marques",
+        stat2Desc: "Prise en charge de tous types de véhicules",
+        stat3Title: "Transparent",
+        stat3Desc: "Prix clairs et validation préalable",
+        highlightsTitle: "Pourquoi les Conducteurs Choisissent ACE",
+        highlight1: "Outils de niveau atelier et calibration de précision",
+        highlight2: "Inspections numériques détaillées avec priorisation des interventions",
+        highlight3: "Délais clairs, communication honnête, sans frais cachés",
+        highlight4: "Atelier maintenu selon des standards élevés de propreté",
+        highlight5: "Service en soirée et week-end sur rendez-vous",
+        galleryTitle: "Galerie de l’Atelier",
+        galleryIntro: "Un aperçu de notre atelier moderne et propre, où véhicules haut de gamme et quotidiens reçoivent une attention méticuleuse.",
+        apptTitle: "Prendre Rendez-vous",
+        apptIntro: "Remplissez le formulaire et nous confirmerons votre rendez-vous dès que possible. En cas d’urgence, appelez-nous directement.",
+        apptGuestNote: "Aucun compte requis : la demande de rendez-vous reste entièrement sans inscription.",
+        apptQuickContact: "Ligne rapide : <a href=\"tel:+32412345678\">+32412345678</a>",
+        labelName: "Nom",
+        labelPhone: "Téléphone",
+        labelEmail: "E-mail",
+        labelVehicle: "Véhicule",
+        labelService: "Service",
+        labelDate: "Date souhaitée",
+        labelDetails: "Détails supplémentaires",
+        placeholderVehicle: "ex. BMW Série 3 - 2020",
+        placeholderDetails: "Décrivez brièvement la panne ou l’intervention souhaitée",
+        optionDiag: "Diagnostic Moteur",
+        optionBrakes: "Freins & Suspension",
+        optionMaintenance: "Entretien Périodique",
+        optionSpecial: "Réparations Spécialisées",
+        optionTires: "Service Pneus",
+        submitAppt: "Demander un Rendez-vous",
+        apptNote: "Après envoi, votre demande est en attente de confirmation.",
+        apptSending: "Envoi de votre demande...",
+        apptSuccess: "Demande envoyée. Vous recevrez automatiquement un e-mail après acceptation ou refus.",
+        apptError: "Échec de l’envoi automatique. Votre application e-mail s’ouvre en secours.",
+        apptInvalidDate: "Veuillez choisir une date disponible (pas le dimanche ni à trop court délai).",
+        followTitle: "Suivez Notre Travail",
+        followDesc: "Découvrez les réparations du quotidien, les actualités de l’atelier et nos projets.",
+        followLink: "@ace.carrepair sur Instagram",
+        contactTitle: "Contact & Localisation",
+        contactAddress: "<strong>Adresse :</strong> Elzendreef 12, 2900 Schoten, Belgique",
+        contactPhone: "<strong>Téléphone :</strong> +32412345678",
+        contactHours: "<strong>Horaires :</strong> Lun-Ven 8:00 - 18:00, Sam 9:00 - 14:00",
+        contactEmail: "<strong>E-mail :</strong> jonas.everaert@outlook.com",
+        findUs: "Nous Trouver",
+        quickCall: "Appeler",
+        quickWhatsApp: "WhatsApp",
+        quickBook: "Rendez-vous",
+        copyright: "© <span id=\"year\"></span> ACE Car Repair. Tous droits réservés."
       }
     };
 
     const titleByLang = {
       nl: "ACE Car Repair | Precisiewerk, Betrouwbare Service",
-      en: "ACE Car Repair | Precision Engineering, Trusted Service"
+      en: "ACE Car Repair | Precision Engineering, Trusted Service",
+      fr: "ACE Car Repair | Ingénierie de Précision, Service de Confiance"
     };
 
     const descByLang = {
       nl: "ACE Car Repair biedt deskundig auto-onderhoud en herstellingen met gecertificeerde mecaniciens, transparante prijzen en betrouwbare service.",
-      en: "ACE Car Repair provides expert automotive maintenance and repair with certified mechanics, transparent pricing, and trusted service."
+      en: "ACE Car Repair provides expert automotive maintenance and repair with certified mechanics, transparent pricing, and trusted service.",
+      fr: "ACE Car Repair propose un entretien et des réparations automobiles experts avec des mécaniciens certifiés, des prix transparents et un service fiable."
+    };
+
+    let appointmentDatePicker = null;
+    const serverUnavailableDates = new Set();
+    const minimumLeadDays = 2; // e.g. today+1 (tomorrow) is unavailable
+    const fullyBookedMonthsByYear = {
+      // Example format: 2026: [0, 7] (0 = January, 7 = August)
+    };
+
+    const toIsoDate = (date) => {
+      const y = date.getFullYear();
+      const m = String(date.getMonth() + 1).padStart(2, "0");
+      const d = String(date.getDate()).padStart(2, "0");
+      return `${y}-${m}-${d}`;
+    };
+
+    const getMinAllowedDate = () => {
+      const d = new Date();
+      d.setHours(0, 0, 0, 0);
+      d.setDate(d.getDate() + minimumLeadDays);
+      return d;
+    };
+
+    const isMonthAvailable = (year, monthIndex) => {
+      const now = new Date();
+      if (year < now.getFullYear()) return false;
+      if (year === now.getFullYear() && monthIndex < now.getMonth()) return false;
+      const blocked = fullyBookedMonthsByYear[year] || [];
+      return !blocked.includes(monthIndex);
+    };
+
+    const isDateUnavailable = (date) => {
+      const normalized = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+      const minAllowed = getMinAllowedDate();
+      const isSunday = normalized.getDay() === 0;
+      const tooSoon = normalized < minAllowed;
+      const iso = toIsoDate(normalized);
+      return isSunday || tooSoon || serverUnavailableDates.has(iso);
+    };
+
+    const refreshUnavailableDates = async () => {
+      const bookingAvailabilityUrl = `${bookingApiUrl}?action=availability`;
+      try {
+        const response = await fetch(bookingAvailabilityUrl, { method: "GET" });
+        const payload = await response.json().catch(() => ({}));
+        if (!response.ok || payload?.ok !== true || !Array.isArray(payload?.unavailable_dates)) return;
+        serverUnavailableDates.clear();
+        payload.unavailable_dates.forEach((d) => {
+          if (typeof d === "string" && /^\d{4}-\d{2}-\d{2}$/.test(d)) {
+            serverUnavailableDates.add(d);
+          }
+        });
+        if (appointmentDatePicker) appointmentDatePicker.redraw();
+      } catch (_err) {
+        // Keep current UI state on temporary availability fetch failures.
+      }
+    };
+
+    const applyMonthAvailabilityStyles = (instance) => {
+      if (!instance) return;
+      const monthSelect = instance.monthsDropdownContainer?.querySelector(".flatpickr-monthDropdown-months");
+      if (!monthSelect) return;
+
+      const year = Number(instance.currentYearElement?.value || instance.currentYear);
+      Array.from(monthSelect.options).forEach((opt) => {
+        const monthIndex = Number(opt.value);
+        const available = isMonthAvailable(year, monthIndex);
+        opt.classList.toggle("month-available", available);
+        opt.classList.toggle("month-full", !available);
+        opt.style.color = available ? "#67e592" : "#ff6f6f";
+      });
+
+      const selectedMonth = Number(monthSelect.value);
+      const selectedAvailable = isMonthAvailable(year, selectedMonth);
+      monthSelect.classList.toggle("month-status-available", selectedAvailable);
+      monthSelect.classList.toggle("month-status-full", !selectedAvailable);
+    };
+
+    const initAppointmentDatePicker = (lang) => {
+      const input = document.getElementById("apptDate");
+      if (!input || !window.flatpickr) return;
+      if (appointmentDatePicker) {
+        appointmentDatePicker.destroy();
+      }
+
+      const localeMap = { nl: "nl", fr: "fr", en: "default" };
+      appointmentDatePicker = window.flatpickr(input, {
+        dateFormat: "Y-m-d",
+        altInput: true,
+        altFormat: "d/m/Y",
+        minDate: getMinAllowedDate(),
+        allowInput: true,
+        monthSelectorType: "dropdown",
+        locale: localeMap[lang] || "default",
+        disableMobile: true,
+        disable: [
+          (date) => !isMonthAvailable(date.getFullYear(), date.getMonth()) || isDateUnavailable(date)
+        ],
+        onDayCreate: (_dObj, _dStr, _fp, dayElem) => {
+          const dayDate = dayElem.dateObj;
+          if (!dayDate) return;
+          if (isDateUnavailable(dayDate)) {
+            dayElem.classList.add("day-unavailable");
+          }
+        },
+        onReady: (_selectedDates, _dateStr, instance) => {
+          const yearInput = instance.currentYearElement;
+          if (yearInput) {
+            yearInput.type = "text";
+            yearInput.inputMode = "numeric";
+            yearInput.pattern = "[0-9]*";
+            yearInput.addEventListener("input", () => {
+              window.setTimeout(() => applyMonthAvailabilityStyles(instance), 0);
+            });
+          }
+          applyMonthAvailabilityStyles(instance);
+          refreshUnavailableDates();
+        },
+        onMonthChange: (_selectedDates, _dateStr, instance) => {
+          applyMonthAvailabilityStyles(instance);
+        },
+        onYearChange: (_selectedDates, _dateStr, instance) => {
+          applyMonthAvailabilityStyles(instance);
+        },
+        onOpen: () => {
+          refreshUnavailableDates();
+        }
+      });
+      if (appointmentDatePicker.altInput) {
+        appointmentDatePicker.altInput.classList.add("appt-alt-date");
+        appointmentDatePicker.altInput.setAttribute("inputmode", "numeric");
+      }
     };
 
     const setLanguage = (lang) => {
@@ -1326,11 +1881,23 @@
         btn.classList.toggle("active", active);
         btn.setAttribute("aria-pressed", active ? "true" : "false");
       });
+
+      initAppointmentDatePicker(lang);
     };
 
     document.querySelectorAll(".lang-btn").forEach((btn) => {
       btn.addEventListener("click", () => setLanguage(btn.dataset.lang));
     });
+
+    const portalLink = document.querySelector(".portal-link");
+    if (portalLink) {
+      const token = localStorage.getItem("ace_portal_token") || "";
+      if (token) {
+        portalLink.setAttribute("href", "dashboard.html");
+      } else {
+        portalLink.setAttribute("href", "account.html");
+      }
+    }
 
     const siteHeader = document.querySelector(".site-header");
     const navToggle = document.getElementById("navToggle");
@@ -1376,32 +1943,33 @@
 
     const appointmentForm = document.getElementById("appointmentForm");
     const businessEmail = "jonas.everaert@outlook.com";
-    const emailJsServiceId = "service_0lpce1w";
-    const emailJsTemplateId = "template_n0hwi81";
-    const emailJsPublicKey = "dG26haK8YtN4T7-XM";
+    const bookingApiUrl = "https://script.google.com/macros/s/AKfycbyVkiMyZjVEkZd9tSIcbvNI7AwlFnkaNlQ0g3L2yuBNdlEaV8-L8X1wXCIkqlZWve33cg/exec";
     const appointmentDateInput = document.getElementById("apptDate");
     const appointmentNote = document.getElementById("appointmentNote");
     const appointmentSubmitBtn = appointmentForm?.querySelector("button[type=\"submit\"]");
 
-    if (appointmentDateInput) {
+    if (appointmentDateInput && !window.flatpickr) {
       appointmentDateInput.min = new Date().toISOString().split("T")[0];
-    }
-
-    if (window.emailjs) {
-      window.emailjs.init({ publicKey: emailJsPublicKey });
     }
 
     appointmentForm?.addEventListener("submit", (event) => {
       event.preventDefault();
       const data = new FormData(appointmentForm);
-      const lang = document.documentElement.lang === "en" ? "en" : "nl";
+      const htmlLang = document.documentElement.lang;
+      const lang = htmlLang === "fr" ? "fr" : (htmlLang === "en" ? "en" : "nl");
       const dict = translations[lang] || translations.nl;
       const selectedService = data.get("service") || "";
       const selectedDate = data.get("date") || "";
+      const selectedDateObj = selectedDate ? new Date(`${selectedDate}T00:00:00`) : null;
       const submittedAt = new Date().toLocaleString(lang === "en" ? "en-GB" : "nl-BE");
       const subject = lang === "en"
         ? `ACE Appointment Request | ${selectedService} | ${selectedDate}`
         : `ACE Afspraakaanvraag | ${selectedService} | ${selectedDate}`;
+
+      if (!selectedDateObj || Number.isNaN(selectedDateObj.getTime()) || isDateUnavailable(selectedDateObj)) {
+        if (appointmentNote) appointmentNote.textContent = dict.apptInvalidDate || "";
+        return;
+      }
 
       const lines = lang === "en"
         ? [
@@ -1461,31 +2029,59 @@
         submitted_at: submittedAt,
         subject
       };
+      try {
+        const rawUser = localStorage.getItem("ace_portal_user");
+        const portalToken = localStorage.getItem("ace_portal_token");
+        if (rawUser) {
+          const user = JSON.parse(rawUser);
+          if (user && typeof user === "object") {
+            templateParams.customer_user_id = String(user.id || "");
+            templateParams.customer_email = String(user.email || "");
+          }
+        }
+        if (portalToken) {
+          templateParams.token = String(portalToken || "");
+        }
+      } catch (_err) {
+        // Keep guest booking flow unaffected if local user storage is unavailable.
+      }
 
       const openMailFallback = () => {
         const mailtoUrl = `mailto:${businessEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
         window.location.href = mailtoUrl;
       };
 
-      if (!window.emailjs) {
+      const apiNotConfigured = !bookingApiUrl || bookingApiUrl.includes("YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL");
+      if (apiNotConfigured) {
         if (appointmentNote) appointmentNote.textContent = dict.apptError || "";
         openMailFallback();
         if (appointmentSubmitBtn) appointmentSubmitBtn.disabled = false;
         return;
       }
 
-      window.emailjs.send(emailJsServiceId, emailJsTemplateId, templateParams, { publicKey: emailJsPublicKey })
-        .then(() => {
+      fetch(bookingApiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(templateParams)
+      })
+        .then(async (response) => {
+          const payload = await response.json().catch(() => ({}));
+          if (!response.ok || payload?.ok !== true) {
+            throw new Error(payload?.error || "Booking API request failed");
+          }
           appointmentForm.reset();
-          if (appointmentDateInput) {
-            appointmentDateInput.min = new Date().toISOString().split("T")[0];
+          if (appointmentDatePicker) {
+            appointmentDatePicker.set("minDate", getMinAllowedDate());
+            await refreshUnavailableDates();
+            appointmentDatePicker.clear();
+          } else if (appointmentDateInput) {
+            appointmentDateInput.min = toIsoDate(getMinAllowedDate());
           }
           if (appointmentNote) appointmentNote.textContent = dict.apptSuccess || "";
         })
         .catch((err) => {
-          const status = err?.status ? ` [${err.status}]` : "";
-          const text = err?.text ? ` ${err.text}` : "";
-          if (appointmentNote) appointmentNote.textContent = `${dict.apptError || ""}${status}${text}`.trim();
+          const text = err?.message ? ` ${err.message}` : "";
+          if (appointmentNote) appointmentNote.textContent = `${dict.apptError || ""}${text}`.trim();
           openMailFallback();
         })
         .finally(() => {
@@ -1497,5 +2093,7 @@
   </script>
 </body>
 </html>
+
+
 
 
